@@ -1,22 +1,29 @@
-// @ts-nocheck
 import React, { useCallback } from 'react';
-import { loadSlim } from 'tsparticles-slim';
-import Particles from 'react-tsparticles';
-import type { Engine } from 'tsparticles-engine';
+import Particles, { initParticlesEngine } from '@tsparticles/react';
+import { loadSlim } from '@tsparticles/slim';
+import type { Container, Engine } from '@tsparticles/engine';
+import useIsomorphicLayoutEffect from '../../../hooks/useIsomorphicLayoutEffect';
 
 const ParticleBackground: React.FC = () => {
-  const particlesInit = useCallback(async (engine: Engine) => {
-    console.log('Initializing particles...');
-    try {
-      await loadSlim(engine);
-      console.log('Particles initialized successfully');
-    } catch (error) {
-      console.error('Error initializing particles:', error);
-    }
+  // Initialize the particles engine
+  useIsomorphicLayoutEffect(() => {
+    const init = async () => {
+      try {
+        await initParticlesEngine(async (engine) => {
+          await loadSlim(engine);
+        });
+      } catch (error) {
+        console.error('Error initializing particles:', error);
+      }
+    };
+
+    init();
   }, []);
 
-  const particlesLoaded = useCallback(async (container: any) => {
-    console.log('Particles loaded:', container);
+  const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    if (container) {
+      console.log('Particles container loaded:', container);
+    }
   }, []);
 
   const particlesOptions = {
@@ -32,7 +39,7 @@ const ParticleBackground: React.FC = () => {
     fpsLimit: 120,
     particles: {
       number: {
-        value: 60,
+        value: 80,
         density: {
           enable: true,
           value_area: 800
@@ -79,11 +86,10 @@ const ParticleBackground: React.FC = () => {
         straight: false,
         outModes: {
           default: 'bounce',
-        }
+        } as any // Temporary type assertion to fix the type error
       }
     },
     interactivity: {
-      detectsOn: 'window',
       events: {
         onHover: {
           enable: true,
@@ -93,29 +99,27 @@ const ParticleBackground: React.FC = () => {
           enable: true,
           mode: 'push'
         },
-        resize: true
       },
       modes: {
         grab: {
           distance: 140,
-          lineLinked: {
+          links: {
             opacity: 0.8
           }
         },
         push: {
-          particles_nb: 4
-        }
+          quantity: 4
+        },
       }
     },
     detectRetina: true,
-  };
+  } as const; // Using const assertion to preserve literal types
 
   return (
     <div className="fixed inset-0 w-screen h-screen pointer-events-none" style={{ zIndex: 0 }}>
       <Particles
         id="tsparticles"
-        init={particlesInit}
-        loaded={particlesLoaded}
+        particlesLoaded={particlesLoaded}
         options={particlesOptions}
         style={{
           position: 'absolute',
@@ -124,7 +128,7 @@ const ParticleBackground: React.FC = () => {
           width: '100%',
           height: '100%',
           backgroundColor: 'transparent',
-          zIndex: 0
+          zIndex: -1,
         }}
       />
     </div>
