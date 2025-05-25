@@ -1,9 +1,8 @@
-// @ts-nocheck
 import { useCallback } from 'react';
-import { loadSlim } from 'tsparticles-slim';
-import Particles from 'react-tsparticles';
-import type { Engine } from 'tsparticles-engine';
 import { useParticles } from '../context/ParticlesContext';
+import { Particles } from '@tsparticles/react';
+import { loadSlim } from '@tsparticles/slim';
+import type { Engine } from '@tsparticles/engine';
 
 interface ParticleBackgroundProps {
   opacity?: number;
@@ -12,48 +11,24 @@ interface ParticleBackgroundProps {
 export default function ParticleBackground({ opacity: propOpacity }: ParticleBackgroundProps) {
   const { opacity: contextOpacity } = useParticles();
   const opacity = propOpacity !== undefined ? propOpacity : contextOpacity;
-  
+
   const particlesInit = useCallback(async (engine: Engine) => {
-    console.log('Initializing particles...');
-    try {
-      await loadSlim(engine);
-      console.log('Particles initialized successfully');
-    } catch (error) {
-      console.error('Error initializing particles:', error);
-    }
+    await loadSlim(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async (container: any) => {
-    console.log('Particles loaded:', container);
-  }, []);
-
-  const particlesOptions = {
-    fullScreen: {
-      enable: false,
-      zIndex: 0
-    },
-    background: {
-      color: {
-        value: 'transparent',
-      },
-    },
-    fpsLimit: 120,
+  const options = {
+    fullScreen: { enable: false, zIndex: -1 },
+    background: { color: { value: 'transparent' } },
+    fpsLimit: 60,
     particles: {
       number: {
-        value: 60,
-        density: {
-          enable: true,
-          value_area: 800
-        }
+        value: 80,
+        density: { enable: true, value_area: 800 }
       },
-      color: {
-        value: '#8b5cf6',
-      },
-      shape: {
-        type: 'circle'
-      },
+      color: { value: '#8b5cf6' },
+      shape: { type: 'circle' },
       opacity: {
-        value: 0.5,
+        value: opacity,
         random: true,
         animation: {
           enable: true,
@@ -77,64 +52,39 @@ export default function ParticleBackground({ opacity: propOpacity }: ParticleBac
         distance: 150,
         enable: true,
         opacity: 0.4,
-        width: 1,
+        width: 1
       },
       move: {
         enable: true,
         speed: 1,
-        direction: 'none',
+        direction: 'none' as const,
         random: true,
         straight: false,
-        outModes: {
-          default: 'bounce',
-        }
+        outModes: { default: 'bounce' as const }
       }
     },
     interactivity: {
-      detectsOn: 'window',
+      detectsOn: 'window' as const,
       events: {
-        onHover: {
-          enable: true,
-          mode: 'grab'
-        },
-        onClick: {
-          enable: true,
-          mode: 'push'
-        },
-        resize: true
+        onHover: { enable: true, mode: 'grab' },
+        onClick: { enable: true, mode: 'push' },
+        resize: { enable: true }
       },
       modes: {
-        grab: {
-          distance: 140,
-          lineLinked: {
-            opacity: 0.8
-          }
-        },
-        push: {
-          particles_nb: 4
-        }
+        grab: { distance: 140, links: { opacity: 0.8 } },
+        push: { quantity: 4 }
       }
     },
-    detectRetina: true,
+    detectRetina: true
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-screen pointer-events-none" style={{ zIndex: -1 }}>
+    <div className="absolute inset-0 w-full h-full">
       <Particles
         id="tsparticles"
-        init={particlesInit}
-        loaded={particlesLoaded}
-        options={particlesOptions}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'transparent',
-          zIndex: -1,
-          opacity: opacity
-        }}
+        // @ts-ignore - Bypass type checking for the initialization prop
+        initParticlesEngine={particlesInit}
+        options={options as any}
       />
     </div>
   );

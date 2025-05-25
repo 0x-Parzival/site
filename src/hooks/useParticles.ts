@@ -1,84 +1,56 @@
-// @ts-nocheck
 import { useCallback } from 'react';
-import { loadSlim } from 'tsparticles-slim';
-import type { Engine, ISourceOptions } from 'tsparticles-engine';
+import { loadSlim } from '@tsparticles/slim';
+import type { Engine } from '@tsparticles/engine';
 
 export const useParticles = () => {
   const particlesInit = useCallback(async (engine: Engine): Promise<void> => {
+    // @ts-ignore - Bypass type checking for Engine type mismatch
     await loadSlim(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async (container?: any): Promise<void> => {
-    console.log('Particles loaded', container);
-  }, []);
 
-  const options: ISourceOptions = {
+
+  const options = {
     fullScreen: { enable: false },
-    background: {
-      color: {
-        value: 'transparent',
-      },
-    },
-    fpsLimit: 120,
-    interactivity: {
-      events: {
-        onHover: {
-          enable: true,
-          mode: 'repulse',
-        },
-        resize: true,
-      },
-      modes: {
-        repulse: {
-          distance: 100,
-          duration: 0.4,
-        },
-      },
-    },
+    background: { color: { value: 'transparent' } },
+    fpsLimit: 60,
     particles: {
-      color: {
-        value: '#8b5cf6',
-      },
+      number: { value: 60, density: { enable: true, value_area: 800 } },
+      color: { value: '#8b5cf6' },
+      shape: { type: 'circle' },
+      opacity: { value: 0.3 },
+      size: { value: 2 },
       links: {
         color: '#8b5cf6',
         distance: 150,
         enable: true,
-        opacity: 0.5,
-        width: 1,
+        opacity: 0.4,
+        width: 1
       },
       move: {
-        direction: 'none',
         enable: true,
-        outModes: {
-          default: 'bounce',
-        },
-        random: false,
         speed: 1,
+        direction: 'none',
+        random: false,
         straight: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          value_area: 800,
-        },
-        value: 80,
-      },
-      opacity: {
-        value: 0.5,
-      },
-      shape: {
-        type: 'circle',
-      },
-      size: {
-        value: { min: 1, max: 3 },
-      },
+        outModes: { default: 'out' }
+      }
     },
-    detectRetina: true,
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: 'grab' },
+        resize: true
+      },
+      modes: {
+        grab: { distance: 140, links: { opacity: 0.8 } }
+      }
+    },
+    detectRetina: true
   };
 
+  // Return the initialization function and options
   return {
     particlesInit,
-    particlesLoaded,
-    options,
+    options
   };
 };
