@@ -3,18 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['images.unsplash.com', 'avatars.githubusercontent.com'], // Add any other domains you use for images
+    domains: ['images.unsplash.com', 'avatars.githubusercontent.com'],
   },
-  // Enable static exports for static site generation
-  output: 'export',
-  // Optional: Add a trailing slash to all paths
+  // Enable trailing slashes for all paths
   trailingSlash: true,
-  // Optional: Change the output directory
-  distDir: 'out',
-  // Optional: Enable static HTML export
+  // Enable static HTML export
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
   },
+  // Enable React strict mode
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
