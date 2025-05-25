@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  isMobile?: boolean;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ isMobile = false }) => {
+  useEffect(() => {
+    // Add a class to the body when component mounts
+    document.body.classList.add('kalkios-page');
+    
+    // Cleanup function to remove the class when component unmounts
+    return () => {
+      document.body.classList.remove('kalkios-page');
+    };
+  }, []);
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-purple-900/40 to-black/50 z-0" />
+    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20 px-4 ${isMobile ? 'touch-device' : ''}`}>
+      {/* Mobile-specific background overlay */}
+      {isMobile && (
+        <div className="fixed inset-0 bg-black/70 z-0" />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-purple-900/50 to-black/60 z-0" />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <motion.div 
@@ -25,7 +42,7 @@ const HeroSection: React.FC = () => {
           </motion.div>
           
           <motion.h1 
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
@@ -34,7 +51,7 @@ const HeroSection: React.FC = () => {
           </motion.h1>
           
           <motion.h2 
-            className="text-2xl md:text-3xl font-medium text-gray-300 mb-8 max-w-3xl mx-auto"
+            className="text-xl sm:text-2xl md:text-3xl font-medium text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -43,7 +60,7 @@ const HeroSection: React.FC = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto"
+            className="text-base sm:text-lg text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -52,15 +69,15 @@ const HeroSection: React.FC = () => {
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full sm:w-auto px-4 sm:px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <button className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/20">
+            <button className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/20 text-sm sm:text-base">
               Download Alpha
             </button>
-            <button className="px-8 py-4 bg-transparent border-2 border-cyan-500/30 text-cyan-400 font-bold rounded-lg hover:bg-cyan-500/10 transition-all">
+            <button className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 bg-transparent border-2 border-cyan-500/30 text-cyan-400 font-bold rounded-lg hover:bg-cyan-500/10 transition-all text-sm sm:text-base">
               View on GitHub
             </button>
           </motion.div>
