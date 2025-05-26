@@ -19,7 +19,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isMobile = false }) => {
     <section className={`relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20 px-4 ${isMobile ? 'touch-device' : ''}`}>
       {/* Mobile-specific background overlay */}
       {isMobile && (
-        <div className="fixed inset-0 bg-black/70 z-0" />
+        <div className="absolute inset-0 bg-black/70 z-0" />
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-purple-900/50 to-black/60 z-0" />
       
