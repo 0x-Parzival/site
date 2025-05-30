@@ -71,7 +71,7 @@ const buttons: ButtonProps[] = [
     image: '/images/ghibli store.png'
   },
   {
-    label: 'Spirituality',
+    label: 'Book & Reports',
     path: '/spirituality',
     color: 'from-purple-600 to-blue-700',
     image: '/images/sprituality.png'
