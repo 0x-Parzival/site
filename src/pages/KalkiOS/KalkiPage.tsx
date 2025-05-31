@@ -31,8 +31,8 @@ const KalkiPage: React.FC = () => {
       animate={inView ? "visible" : "hidden"}
       variants={containerVariants}
     >
-      <div className="min-h-screen bg-matrix-black text-neon-green font-mono">
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen bg-matrix-black text-neon-green font-mono relative">
+        <div className="container mx-auto px-4 py-8 z-10">
           <div className="text-center mb-16">
             <img src="/images/kalkios-logo.png" alt="Kalki OS Logo" className="w-48 h-48 mx-auto mb-8" />
             <h1 className="text-6xl font-bold mb-4">KALKI OS</h1>
