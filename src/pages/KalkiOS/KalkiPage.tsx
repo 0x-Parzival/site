@@ -26,27 +26,29 @@ const KalkiPage: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen text-white overflow-x-hidden">
-      {/* Background with z-index 0 */}
-      {/* Global ParticleBackground is applied at App level */}
-      
-      {/* Content with z-index 10 */}
-      <div className="relative z-10">
-        <motion.div 
-          ref={ref}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-          variants={containerVariants}
-        >
-          <HeroSection />
-          <FeaturesSection />
-          <InterfaceMockup />
-          <ScreenshotsCarousel />
-          <RoadmapSection />
-          <DownloadSection />
-        </motion.div>
+    <motion.div
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
+      <div className="min-h-screen bg-matrix-black text-neon-green font-mono">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center mb-16">
+            <img src="/images/kalkios-logo.png" alt="Kalki OS Logo" className="w-48 h-48 mx-auto mb-8" />
+            <h1 className="text-6xl font-bold mb-4">KALKI OS</h1>
+            <p className="text-xl mb-8">
+              The Avatar of Digital Rebirth
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+      <HeroSection />
+      <FeaturesSection />
+      <InterfaceMockup />
+      <ScreenshotsCarousel />
+      <RoadmapSection />
+      <DownloadSection />
+    </motion.div>
   );
 };
 
