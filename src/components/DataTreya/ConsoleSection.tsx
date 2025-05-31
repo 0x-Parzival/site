@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-// Attempt to import xterm dynamically to avoid SSR issues if not strictly necessary server-side
-// For a Next.js app, dynamic import is often preferred for client-side libraries
-// import { Terminal } from 'xterm';
-// import { FitAddon } from 'xterm-addon-fit';
-import 'xterm/css/xterm.css'; // Import xterm.css
+import 'xterm/css/xterm.css';
+import { Terminal } from 'xterm';
+import { FitAddon } from 'xterm-addon-fit';
+
+interface ConsoleSectionProps {
+  className?: string;
+} // Import xterm.css
 
 const ConsoleSection: React.FC = () => {
   const terminalRef = useRef<HTMLDivElement>(null);

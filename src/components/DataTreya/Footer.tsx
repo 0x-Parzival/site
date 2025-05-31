@@ -11,9 +11,9 @@ const Footer: React.FC = () => {
 
         {/* ASCII Art */}
         <pre className="text-neon-green font-mono text-lg mb-6 leading-tight select-none">
-          {'   /\'}
+          {'   /\\'}
           {'  (👁️)'}
-          {'  /🐾\'}
+          {'  /🐾\\'}
           {'DATA-TREYA'}
         </pre>
 
