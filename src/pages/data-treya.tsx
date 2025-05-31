@@ -12,13 +12,16 @@ import DeploymentInterface from '@/components/DataTreya/DeploymentInterface';
 import FeaturesSection from '@/components/DataTreya/FeaturesSection';
 import Testimonials from '@/components/DataTreya/Testimonials';
 import TechStack from '@/components/DataTreya/TechStack';
+import ParticleBackground from '@/components/DataTreya/ParticleBackground'; // Import ParticleBackground
 
 const DataTreyaPage: React.FC = () => {
   return (
-    <div className="bg-matrix-black text-neon-green font-mono min-h-screen">
-      <HeroSection />
-      <TriEyeModel />
-      <AgentConsole />
+    <div className="bg-matrix-black text-neon-green font-mono min-h-screen relative"> {/* Ensure relative positioning for z-index context */}
+      <ParticleBackground /> {/* Add ParticleBackground here */}
+      <div className="relative z-10"> {/* Content wrapper with higher z-index */}
+        <HeroSection />
+        <TriEyeModel />
+        <AgentConsole />
       <VisualThreatGrid />
       <DeploymentInterface />
       <FeaturesSection />
@@ -30,6 +33,7 @@ const DataTreyaPage: React.FC = () => {
       <ThreatFeed />
       <DeploymentSection />
       <Footer />
+      </div>
     </div>
   );
 };
