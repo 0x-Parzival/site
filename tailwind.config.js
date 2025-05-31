@@ -19,6 +19,8 @@ module.exports = {
           800: '#1e293b',
           900: '#0f172a',
         },
+        'matrix-black': '#0d0d0d',
+        'neon-green': '#39ff14',
       },
       boxShadow: {
         'cyan-glow': '0 0 15px 3px rgba(0,255,255,0.6)',
@@ -67,6 +69,9 @@ module.exports = {
       },
       backgroundSize: {
         'gradient-pos': '400% 400%',
+      },
+      fontFamily: {
+        mono: ['Fira Code', 'monospace'],
       },
     },
   },
