@@ -35,8 +35,8 @@ const KalkiPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-matrix-black text-neon-green font-mono">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-matrix-black text-neon-green font-mono relative">
+      <div className="container mx-auto px-4 py-8 z-10">
         {/* Header with Logo */}
         <div className="text-center mb-16">
           <img src="/images/kalkios-logo.png" alt="Kalki OS Logo" className="w-48 h-48 mx-auto mb-8" />
