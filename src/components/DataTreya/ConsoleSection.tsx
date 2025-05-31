@@ -7,17 +7,13 @@ interface ConsoleSectionProps {
   className?: string;
 } // Import xterm.css
 
-const ConsoleSection: React.FC = () => {
+const ConsoleSection: React.FC<ConsoleSectionProps> = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
-  const xtermRef = useRef<any>(null); // Using 'any' for Terminal type to simplify if dynamic import is tricky
+  const xtermRef = useRef<Terminal | null>(null);
 
   useEffect(() => {
-    // Dynamically import Terminal and FitAddon only on the client-side
-    Promise.all([
-      import('@xterm/xterm').then(mod => mod.Terminal),
-      import('@xterm/addon-fit').then(mod => mod.FitAddon)
-    ]).then(([Terminal, FitAddon]) => {
-      if (terminalRef.current && !xtermRef.current) {
+    if (terminalRef.current && !xtermRef.current) {
+      try {
         const term = new Terminal({
           cursorBlink: true,
           theme: {
@@ -43,6 +39,8 @@ const ConsoleSection: React.FC = () => {
         term.writeln('Welcome to the Matrix Console.');
         term.writeln('Monitoring network traffic...');
         term.writeln('');
+        
+        // Add prompt method
         term.prompt = () => {
           term.write('\r\n$ ');
         };
@@ -51,11 +49,6 @@ const ConsoleSection: React.FC = () => {
         term.onKey((e: { key: string; domEvent: KeyboardEvent }) => {
           const ev = e.domEvent;
           if (ev.key === 'Enter') {
-            // For simplicity, this example doesn't handle command history or complex input
-            // It just echoes the command and gives a generic response
-            // term.write('
-'); // New line already handled by prompt
-            // This is a very basic echo, real command processing would be needed
             term.writeln(`> Command executed (not really)`);
             term.prompt();
           } else if (ev.key === 'Backspace') {
@@ -67,7 +60,7 @@ const ConsoleSection: React.FC = () => {
           }
         });
 
-        xtermRef.current = term; // Store terminal instance
+        xtermRef.current = term;
 
         // Handle resize
         const handleResize = () => {
@@ -77,16 +70,15 @@ const ConsoleSection: React.FC = () => {
 
         return () => {
           window.removeEventListener('resize', handleResize);
-          term.dispose();
+          if (term) {
+            term.dispose();
+          }
           xtermRef.current = null;
         };
+      } catch (error) {
+        console.error('Error initializing terminal:', error);
       }
-    }).catch(error => {
-      console.error("Failed to load xterm.js modules", error);
-      if (terminalRef.current) {
-        terminalRef.current.innerText = "Error loading terminal. Please ensure xterm.js is installed and working.";
-      }
-    });
+    }
   }, []);
 
   return (
