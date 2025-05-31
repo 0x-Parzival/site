@@ -1,6 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
-import { FiBookOpen, FiX, FiDownload, FiHeart, FiExternalLink } from 'react-icons/fi';
+import { useState, lazy, Suspense } from 'react';
+import { FiBookOpen, FiDownload, FiHeart, FiExternalLink } from 'react-icons/fi';
 import ParticleBackground from '../components/ParticleBackground';
+
+// Lazy load components
+const BhagwatamAnalysis = lazy(() => import('../components/BhagwatamAnalysis'));
+const TelepathyTelekinesisAnalysis = lazy(() => import('../components/TelepathyTelekinesisAnalysis'));
 
 interface PDFItem {
   id: string;
@@ -29,57 +33,21 @@ interface NGO {
 }
 
 const Spirituality = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [activeResource, setActiveResource] = useState<string | null>(null);
-  const [showInteractive, setShowInteractive] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  
-  const tabs = [
-    { id: 'overview', label: 'Overview' },
-    { id: 'analysis', label: 'Analysis' },
-    { id: 'resources', label: 'Resources' },
-  ];
-  
-  const interactiveElements = [
-    { 
-      id: 'timeline', 
-      title: 'Timeline', 
-      subtitle: 'Historical context',
-      content: 'Explore the chronological events and historical periods covered in the Bhagavad Puran.'
-    },
-    { 
-      id: 'characters', 
-      title: 'Characters', 
-      subtitle: 'Key figures',
-      content: 'Learn about the main deities, sages, and personalities featured in the text.'
-    },
-    { 
-      id: 'themes', 
-      title: 'Themes', 
-      subtitle: 'Major concepts',
-      content: 'Discover the central philosophical and spiritual themes of the Bhagavad Puran.'
-    },
-    { 
-      id: 'maps', 
-      title: 'Maps', 
-      subtitle: 'Sacred geography',
-      content: 'View the sacred places and pilgrimage sites mentioned in the text.'
+  const [showBhagwatamPopup, setShowBhagwatamPopup] = useState(false);
+  const [showTelepathyPopup, setShowTelepathyPopup] = useState(false);
+
+  const handleReadNow = (pdfId: string) => {
+    if (pdfId === '1') {
+      setShowBhagwatamPopup(true);
+    } else if (pdfId === '2') {
+      setShowTelepathyPopup(true);
+    } else {
+      // Open other PDFs in a new tab
+      window.open('#', '_blank');
     }
-  ];
-  
-  const handleInteractiveClick = (elementId: string) => {
-    setActiveResource(elementId);
-    setShowInteractive(true);
-  };
-  
-  const closeInteractive = () => {
-    setShowInteractive(false);
-    // Small delay to allow the animation to complete
-    setTimeout(() => setActiveResource(null), 300);
   };
 
-  // Sample data - replace with your actual data
+  // Sample data
   const [pdfs] = useState<PDFItem[]>([
     {
       id: '1',
@@ -90,11 +58,18 @@ const Spirituality = () => {
     },
     {
       id: '2',
+      title: 'Interactive Exploration: Telepathy & Telekinesis',
+      description: 'A comprehensive analysis of telepathic and telekinetic phenomena through scientific and historical lenses',
+      fileUrl: '#',
+      thumbnail: 'https://www.verywellmind.com/thmb/0QnUeQzW9B3PbLpeFgox2T1Tj8g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-telekinesis-4582442_final-5c7d6c3e4cedfd0001c2d6c7.png'
+    },
+    {
+      id: '2',
       title: 'The Seven Spiritual Laws of Success',
       description: 'Practical guide to achieving your goals through spiritual principles',
       fileUrl: '/pdfs/seven-spiritual-laws.pdf',
       thumbnail: '/images/books/seven-laws.jpg'
-    },
+    }
   ]);
 
   const [blogs] = useState<BlogPost[]>([
@@ -137,18 +112,7 @@ const Spirituality = () => {
     // Add more NGOs as needed
   ]);
 
-  // Close modal when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        setShowModal(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+
 
   // Add glow effect to text
   const glowText = {
@@ -171,7 +135,7 @@ const Spirituality = () => {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#00d9ff] to-[#ff00f7] sm:text-5xl md:text-6xl font-['Orbitron'] tracking-wider" style={glowText}>
-            SPIRITUAL EXPLORATIONS
+            BOOKS AND REPORTS
           </h1>
           <p className="mt-3 max-w-md mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl font-light tracking-wider">
             Journey through ancient wisdom with a modern analytical perspective
@@ -212,10 +176,10 @@ const Spirituality = () => {
                     <h3 className="text-lg font-medium text-[#00d9ff] tracking-wide">{pdf.title}</h3>
                     <p className="mt-1 text-sm text-gray-300">{pdf.description}</p>
                     <div className="mt-4">
-                      <button
-                        onClick={() => setShowModal(true)}
-                        className="inline-flex items-center text-sm font-medium text-[#ff00f7] hover:text-[#00d9ff] transition-all duration-200 group-hover:tracking-wider"
-                      >
+                        <button
+                          onClick={() => handleReadNow(pdf.id)}
+                          className="inline-flex items-center text-sm font-medium text-[#ff00f7] hover:text-[#00d9ff] transition-all duration-200 group-hover:tracking-wider"
+                        >
                         <span className="relative">
                           <span className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00f7] to-[#00d9ff] rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-300"></span>
                           <span className="relative px-4 py-1.5 bg-black/80 rounded-lg flex items-center">
@@ -312,174 +276,22 @@ const Spirituality = () => {
           </div>
         </section>
       </div>
-
-      {/* Modal for Interactive Content */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-auto">
-          <div 
-            ref={modalRef}
-            className="relative w-full max-w-6xl max-h-[90vh] bg-gray-900/95 rounded-xl border border-[#00d9ff]/30 overflow-y-auto p-8"
-            style={{
-              boxShadow: '0 0 30px rgba(0, 217, 255, 0.5)',
-              zIndex: 1000,
-            }}
-          >
-            <h2 className="text-3xl font-bold text-center text-[#00d9ff] mb-6">Bhagwatam Puran Analysis</h2>
-            <div className="border-b border-gray-700 mb-6">
-              <nav className="-mb-px flex space-x-8">
-                {tabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
-                      activeTab === tab.id
-                        ? 'border-[#00d9ff] text-[#00d9ff]'
-                        : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-400'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-            
-            <div className="prose prose-invert max-w-none">
-              {activeTab === 'overview' && (
-                <>
-                  <p className="text-gray-300 mb-4">
-                    The Bhagwatam Puran is one of the most important texts in the Vaishnava tradition, 
-                    consisting of 18,000 verses across 12 cantos. This interactive analysis explores both 
-                    the logical philosophical frameworks and the mystical elements of the text.
-                  </p>
-                  
-                  <h3 className="text-xl font-semibold text-[#00d9ff] mt-8 mb-4">Key Features</h3>
-                  <ul className="list-disc pl-6 text-gray-300 space-y-2">
-                    <li>Comprehensive analysis of all 12 cantos</li>
-                    <li>Interactive charts and visualizations</li>
-                    <li>Detailed exploration of philosophical concepts</li>
-                    <li>Comparison with modern scientific understanding</li>
-                  </ul>
-                </>
-              )}
-              
-              {activeTab === 'analysis' && (
-                <div className="space-y-6">
-                  <h3 className="text-xl font-semibold text-[#00d9ff] mb-4">Textual Analysis</h3>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-4 bg-black/30 rounded-lg border border-[#00d9ff]/20">
-                      <h4 className="font-semibold text-[#00d9ff] mb-2">Logical Aspects</h4>
-                      <p className="text-gray-300 text-sm">
-                        The text presents a coherent philosophical system that aligns with Vedic thought,
-                        particularly in its exploration of metaphysics, ethics, and the nature of reality.
-                      </p>
-                    </div>
-                    <div className="p-4 bg-black/30 rounded-lg border border-[#00d9ff]/20">
-                      <h4 className="font-semibold text-[#00d9ff] mb-2">Mystical Elements</h4>
-                      <p className="text-gray-300 text-sm">
-                        The text contains numerous accounts of supernatural events and miracles that
-                        challenge modern empirical understanding but hold deep symbolic meaning.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {activeTab === 'resources' && (
-                <div>
-                  <h3 className="text-xl font-semibold text-[#00d9ff] mb-4">Additional Resources</h3>
-                  <ul className="space-y-3">
-                    <li>
-                      <a href="#" className="text-[#00d9ff] hover:underline">
-                        Complete Text (Sanskrit with English Translation)
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-[#00d9ff] hover:underline">
-                        Commentary by Srila Prabhupada
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-[#00d9ff] hover:underline">
-                        Academic Papers on Bhagavatam Studies
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              )}
-              
-              <div className="mt-8 p-6 bg-black/30 rounded-lg border border-[#00d9ff]/20 relative">
-                <h4 className="text-lg font-semibold text-[#00d9ff] mb-3">Interactive Elements</h4>
-                <p className="text-gray-300 mb-4">
-                  Click on the elements below to explore more details and interactive content.
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {interactiveElements.map((element) => (
-                    <button
-                      key={element.id}
-                      onClick={() => handleInteractiveClick(element.id)}
-                      className="p-3 bg-black/40 rounded border border-[#00d9ff]/10 hover:border-[#00d9ff]/50 transition-all duration-200 hover:bg-black/60 text-left"
-                    >
-                      <h5 className="text-[#00d9ff] text-sm font-medium">{element.title}</h5>
-                      <p className="text-xs text-gray-400">{element.subtitle}</p>
-                    </button>
-                  ))}
-                </div>
-                
-                {/* Interactive Content Overlay */}
-                <div 
-                  className={`absolute inset-0 bg-black/90 backdrop-blur-sm rounded-lg p-6 transition-all duration-300 flex flex-col ${
-                    showInteractive ? 'opacity-100 visible' : 'opacity-0 invisible'
-                  }`}
-                >
-                  {activeResource && (
-                    <>
-                      <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-xl font-bold text-[#00d9ff]">
-                          {interactiveElements.find(e => e.id === activeResource)?.title}
-                        </h3>
-                        <button 
-                          onClick={closeInteractive}
-                          className="text-gray-400 hover:text-white transition-colors"
-                        >
-                          <FiX className="h-5 w-5" />
-                        </button>
-                      </div>
-                      <div className="flex-1 overflow-y-auto">
-                        <p className="text-gray-300 mb-4">
-                          {interactiveElements.find(e => e.id === activeResource)?.content}
-                        </p>
-                        {/* Add more detailed content here based on the activeResource */}
-                      </div>
-                      <div className="mt-4 flex justify-end space-x-3">
-                        <button 
-                          onClick={closeInteractive}
-                          className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                        >
-                          Close
-                        </button>
-                        <button 
-                          onClick={() => {
-                            closeInteractive();
-                            setActiveTab('resources');
-                          }}
-                          className="px-4 py-2 text-sm font-medium text-[#00d9ff] hover:text-white bg-[#00d9ff]/10 hover:bg-[#00d9ff]/20 rounded-md transition-colors"
-                        >
-                          Explore More
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-            <button 
-              onClick={() => setShowModal(false)}
-              className="absolute right-4 top-4 z-50 text-gray-300 hover:text-white transition-colors"
-            >
-              <FiX className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
+      
+      {/* Analysis Popups */}
+{showBhagwatamPopup && (
+        <Suspense fallback={<div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="text-white text-lg">Loading Analysis...</div>
+        </div>}>
+          <BhagwatamAnalysis onClose={() => setShowBhagwatamPopup(false)} />
+        </Suspense>
+      )}
+      
+      {showTelepathyPopup && (
+        <Suspense fallback={<div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="text-white text-lg">Loading Analysis...</div>
+        </div>}>
+          <TelepathyTelekinesisAnalysis onClose={() => setShowTelepathyPopup(false)} />
+        </Suspense>
       )}
     </div>
   );

@@ -6,6 +6,7 @@ interface ButtonProps {
   path: string;
   color: string;
   image: string;
+  logo?: string;
 }
 
 const Button = ({ label, path, color, image }: ButtonProps) => {
@@ -95,10 +96,11 @@ const buttons: ButtonProps[] = [
     image: '/images/kalki os.png'
   },
   {
-    label: 'Who is She',
-    path: '/whoishe',
-    color: 'from-pink-400 to-purple-500',
-    image: '/images/who am i.jpg'
+    label: 'Data-Treya',
+    path: '/data-treya',
+    color: 'from-blue-400 to-indigo-600',
+    image: '/images/data-treya-button.png',
+    logo: '/images/data-treya-logo.png'
   },
 
 ];
