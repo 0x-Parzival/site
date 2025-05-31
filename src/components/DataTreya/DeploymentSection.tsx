@@ -25,7 +25,7 @@ const DeploymentSection: React.FC = () => {
           } else {
             // Simulate a deploying state before becoming active
             const newStatus = 'deploying';
-            setTimeout(()_ => {
+            setTimeout(() => {
                 setTargets(currentTargets => currentTargets.map(t => t.id === id ? {...t, status: 'active'} : t));
             }, 2000); // Simulate deployment time
             return { ...target, status: newStatus };

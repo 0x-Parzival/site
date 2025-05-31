@@ -12,6 +12,7 @@ const testimonials: Testimonial[] = [
     quote: '"Data-Treya\'s predictive defense prevented a ransomware breach that even our SOC missed."',
   },
   {
+    client: 'CLIENT: [REDACTED]',
     agent: 'AGENT: @thewatcher',
     quote: '"Feels like installing a digital Shiva—omniscient, omnipresent, omnidefensive."',
   },
@@ -51,7 +52,7 @@ const Testimonials: React.FC = () => {
           </div>
         ))}
       </div>
-      <style jsx global>{`
+      <style global>{`
         @keyframes fadeInChar {
           0% { opacity: 0; transform: translateY(-10px); }
           100% { opacity: 1; transform: translateY(0); }

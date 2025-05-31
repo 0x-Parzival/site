@@ -12,8 +12,8 @@ const ConsoleSection: React.FC = () => {
   useEffect(() => {
     // Dynamically import Terminal and FitAddon only on the client-side
     Promise.all([
-      import('xterm').then(mod => mod.Terminal),
-      import('xterm-addon-fit').then(mod => mod.FitAddon)
+      import('@xterm/xterm').then(mod => mod.Terminal),
+      import('@xterm/addon-fit').then(mod => mod.FitAddon)
     ]).then(([Terminal, FitAddon]) => {
       if (terminalRef.current && !xtermRef.current) {
         const term = new Terminal({
