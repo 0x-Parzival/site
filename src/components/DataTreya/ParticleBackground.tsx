@@ -31,6 +31,15 @@ const ParticleBackground: React.FC = () => {
     return null; // Or a fallback loader
   }
 
+  return (
+    <div className="absolute inset-0 z-0">
+      <ParticlesComponent
+        options={particlesOptions}
+        className="absolute inset-0"
+      />
+    </div>
+  );
+
   const particlesOptions = {
     background: {
       color: {

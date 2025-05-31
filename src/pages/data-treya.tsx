@@ -17,9 +17,11 @@ import ParticleBackground from '../components/DataTreya/ParticleBackground'; // 
 const DataTreyaPage: React.FC = () => {
   return (
     <div className="bg-matrix-black text-neon-green font-mono min-h-screen relative overflow-hidden">
-      <ParticleBackground />
-      <div className="relative z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative z-10 space-y-16 py-16">
+      <div className="absolute inset-0">
+        <ParticleBackground />
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-20 space-y-16 py-16">
           <HeroSection />
           <TriEyeModel />
           <AgentConsole />
