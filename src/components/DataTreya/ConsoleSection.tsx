@@ -5,7 +5,7 @@ import { FitAddon } from 'xterm-addon-fit';
 
 interface ConsoleSectionProps {
   className?: string;
-} // Import xterm.css
+}
 
 const ConsoleSection: React.FC<ConsoleSectionProps> = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
@@ -41,16 +41,16 @@ const ConsoleSection: React.FC<ConsoleSectionProps> = () => {
         term.writeln('');
         
         // Add prompt method
-        term.prompt = () => {
+        (term as any).prompt = () => {
           term.write('\r\n$ ');
         };
-        term.prompt();
+        (term as any).prompt();
 
         term.onKey((e: { key: string; domEvent: KeyboardEvent }) => {
           const ev = e.domEvent;
           if (ev.key === 'Enter') {
             term.writeln(`> Command executed (not really)`);
-            term.prompt();
+            (term as any).prompt();
           } else if (ev.key === 'Backspace') {
             if (term.buffer.active.cursorX > 2) { // Prevent deleting the prompt
               term.write('\b \b');
@@ -82,7 +82,7 @@ const ConsoleSection: React.FC<ConsoleSectionProps> = () => {
   }, []);
 
   return (
-    <section className="py-16 px-4">
+    <section className="py-16 px-4 relative z-10">
       <h2 className="text-4xl font-bold text-center mb-8 text-neon-green">System Console (xterm.js)</h2>
       <div className="max-w-5xl mx-auto">
         <div ref={terminalRef} className="border border-neon-green rounded-lg overflow-hidden shadow-xl shadow-neon-green/20"></div>

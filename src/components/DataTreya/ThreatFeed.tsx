@@ -9,15 +9,20 @@ const generateRandomArcsData = () => {
   const MAX_LAT = 40; // Focus on northern hemisphere for this example
   const MAX_LNG = 120;
   const MAX_ALT = 0.8; // Max altitude of the arc
+  const arcs = [];
 
-  return [...Array(N_ARCS).keys()].map(() => ({
-    startLat: (Math.random() - 0.5) * MAX_LAT * 2,
-    startLng: (Math.random() - 0.5) * MAX_LNG * 2,
-    endLat: (Math.random() - 0.5) * MAX_LAT * 2,
-    endLng: (Math.random() - 0.5) * MAX_LNG * 2,
-    color: `rgba(57, 255, 20, ${Math.random() * 0.6 + 0.2})`, // neon-green with random opacity
-    stroke: Math.random() * 1 + 0.5, // Random stroke width
-  }));
+  for (let i = 0; i < N_ARCS; i++) {
+    arcs.push({
+      startLat: (Math.random() - 0.5) * MAX_LAT * 2,
+      startLng: (Math.random() - 0.5) * MAX_LNG * 2,
+      endLat: (Math.random() - 0.5) * MAX_LAT * 2,
+      endLng: (Math.random() - 0.5) * MAX_LNG * 2,
+      color: `rgba(57, 255, 20, ${Math.random() * 0.6 + 0.2})`, // neon-green with random opacity
+      stroke: Math.random() * 1 + 0.5, // Random stroke width
+    });
+  }
+
+  return arcs;
 };
 
 

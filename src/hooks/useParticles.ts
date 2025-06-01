@@ -1,14 +1,11 @@
 import { useCallback } from 'react';
-import { loadSlim } from '@tsparticles/slim';
-import type { Engine } from '@tsparticles/engine';
+import { loadSlim } from 'tsparticles-slim';
+import type { Engine } from 'tsparticles-engine';
 
 export const useParticles = () => {
   const particlesInit = useCallback(async (engine: Engine): Promise<void> => {
-    // @ts-ignore - Bypass type checking for Engine type mismatch
     await loadSlim(engine);
   }, []);
-
-
 
   const options = {
     fullScreen: { enable: false },

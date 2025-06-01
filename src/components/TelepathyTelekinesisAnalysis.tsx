@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -6,7 +6,7 @@ interface TelepathyTelekinesisAnalysisProps {
   onClose: () => void;
 }
 
-export default function TelepathyTelekinesisAnalysis({ onClose }: TelepathyTelekinesisAnalysisProps) {
+const TelepathyTelekinesisAnalysis: React.FC<TelepathyTelekinesisAnalysisProps> = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState('introduction');
   const [activeSubTab, setActiveSubTab] = useState('');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
@@ -240,3 +240,5 @@ export default function TelepathyTelekinesisAnalysis({ onClose }: TelepathyTelek
     </div>
   );
 }
+
+export default TelepathyTelekinesisAnalysis;

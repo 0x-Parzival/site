@@ -1,62 +1,85 @@
-import { useCallback } from 'react';
-import { Particles } from '@tsparticles/react';
-import { loadSlim } from '@tsparticles/slim';
+import React, { useCallback } from 'react';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
 import type { Engine } from 'tsparticles-engine';
 
-export default function ParticleBackground() {
+interface ParticleBackgroundProps {
+  opacity?: number;
+}
+
+const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ opacity = 0.5 }) => {
   const particlesInit = useCallback(async (engine: Engine) => {
-    // @ts-ignore - Bypass type checking for Engine type mismatch
-    await loadSlim(engine);
+    await loadFull(engine);
   }, []);
 
-  // Minimal working configuration with type assertion
-  const particleOptions = {
-    fullScreen: { enable: false },
-    particles: {
-      number: {
-        value: 60,
-        density: { enable: true, value_area: 800 }
-      },
-      color: { value: '#8b5cf6' },
-      shape: { type: 'circle' },
-      opacity: { value: 0.3 },
-      size: { value: 2 },
-      links: {
-        color: '#8b5cf6',
-        distance: 150,
-        enable: true,
-        opacity: 0.4,
-        width: 1
-      },
-      move: {
-        enable: true,
-        speed: 1,
-        direction: 'none',
-        random: false,
-        straight: false
-      }
-    },
-    interactivity: {
-      events: {
-        onHover: { enable: true, mode: 'grab' },
-        resize: { enable: true }
-      },
-      modes: {
-        grab: { distance: 140, links: { opacity: 0.8 } }
-      }
-    },
-    detectRetina: true
-  } as const; // Using const assertion to infer literal types
-
   return (
-    <div className="fixed inset-0 w-screen h-screen pointer-events-none">
-      <Particles
-        id="tsparticles"
-        // @ts-ignore - Bypass type checking for the init prop
-        init={particlesInit}
-        options={particleOptions}
-        className="absolute inset-0 w-full h-full"
-      />
-    </div>
+    <Particles
+      id="tsparticles"
+      init={particlesInit}
+      options={{
+        background: {
+          color: {
+            value: 'transparent',
+          },
+        },
+        fpsLimit: 120,
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "repulse",
+            },
+            resize: true,
+          },
+          modes: {
+            repulse: {
+              distance: 200,
+              duration: 0.4,
+            },
+          },
+        },
+        particles: {
+          color: {
+            value: "#00d9ff",
+          },
+          links: {
+            color: "#00d9ff",
+            distance: 150,
+            enable: true,
+            opacity: opacity,
+            width: 1,
+          },
+          move: {
+            direction: "none",
+            enable: true,
+            outModes: {
+              default: "bounce",
+            },
+            random: false,
+            speed: 2,
+            straight: false,
+          },
+          number: {
+            density: {
+              enable: true,
+              value_area: 800,
+            },
+            value: 80,
+          },
+          opacity: {
+            value: opacity,
+          },
+          shape: {
+            type: "circle",
+          },
+          size: {
+            value: { min: 1, max: 5 },
+          },
+        },
+        detectRetina: true,
+      }}
+    />
   );
-}
+};
+
+export default ParticleBackground;

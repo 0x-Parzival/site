@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 
 interface ButtonProps {
@@ -109,9 +110,34 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full overflow-y-auto relative">
       <div className="text-center text-white py-4 relative z-10">
-        <h1 className="text-4xl font-black uppercase tracking-wider mb-2">
+        <motion.h1 
+          className="text-4xl font-black uppercase tracking-wider mb-2 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          style={{
+            textShadow: '0 0 10px rgba(0, 217, 255, 0.5), 0 0 20px rgba(0, 217, 255, 0.3)',
+            fontFamily: 'Orbitron, sans-serif',
+            letterSpacing: '0.2em',
+            backgroundSize: '200% auto',
+            animation: 'gradient 8s linear infinite'
+          }}
+        >
+          <span className="inline-block animate-pulse">[</span>
           WELCOME TO KESHAVBRUH.COM
-        </h1>
+          <span className="inline-block animate-pulse">]</span>
+        </motion.h1>
+        <motion.p 
+          className="text-lg text-gray-400 mt-2 font-light tracking-wider"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <span className="text-cyan-400">[</span>
+          <span className="text-purple-400">SYSTEM</span>
+          <span className="text-cyan-400">]</span>
+          <span className="text-gray-400"> INITIALIZING NEURAL INTERFACE</span>
+        </motion.p>
       </div>
       <div className="relative z-10 p-4">
         {/* First row with 5 buttons */}

@@ -128,7 +128,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ product, onClose, onSubmi
 };
 
 const ProductCard: React.FC<{ product: Product; onBuyNow: (product: Product) => void }> = ({ product, onBuyNow }) => {
-  const isMobile = useMediaQuery({ maxWidth: 640 });
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
   
   return (
     <div className={`shrink-0 ${isMobile ? 'w-[280px]' : 'w-[320px]'} aspect-[16/9] bg-black/20 backdrop-blur-[2px] rounded-xl p-4
@@ -163,7 +163,7 @@ export const GhibliStore: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showCheckout, setShowCheckout] = useState(false);
 
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Logo component at the top of the page

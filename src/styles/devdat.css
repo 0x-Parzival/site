@@ -1,0 +1,161 @@
+/* Cyberpunk theme variables */
+:root {
+  --neon-blue: #00f3ff;
+  --cyber-purple: #b700ff;
+  --dark-bg: #0a0a14;
+  --darker-bg: #050508;
+  --card-bg: rgba(15, 15, 25, 0.8);
+  --card-border: rgba(0, 243, 255, 0.2);
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+}
+
+/* Global styles */
+.devdat-container {
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-family: 'Rajdhani', 'Inter', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, var(--neon-blue), var(--cyber-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 8s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glow effects */
+.glow {
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
+}
+
+/* Button styles */
+.cyber-button {
+  background: linear-gradient(45deg, var(--neon-blue), var(--cyber-purple));
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cyber-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 243, 255, 0.4);
+}
+
+.cyber-button.secondary {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+}
+
+/* Card styles */
+.cyber-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 243, 255, 0.1);
+  border-color: var(--neon-blue);
+}
+
+/* Animated background */
+.cyber-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.1;
+  background: 
+    radial-gradient(circle at 20% 30%, var(--neon-blue), transparent 25%),
+    radial-gradient(circle at 80% 70%, var(--cyber-purple), transparent 25%),
+    var(--darker-bg);
+  animation: backgroundPulse 20s ease infinite;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.15; }
+}
+
+/* Grid pattern overlay */
+.grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Section styles */
+.section {
+  position: relative;
+  padding: 6rem 2rem;
+  overflow: hidden;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--cyber-purple));
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+}

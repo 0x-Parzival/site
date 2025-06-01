@@ -17,24 +17,29 @@ import ParticleBackground from '../components/DataTreya/ParticleBackground'; // 
 const DataTreyaPage: React.FC = () => {
   return (
     <div className="bg-matrix-black text-neon-green font-mono min-h-screen relative overflow-hidden">
-      <div className="absolute inset-0">
+      {/* Particle Background with lower z-index */}
+      <div className="fixed inset-0 z-0">
         <ParticleBackground />
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative z-20 space-y-16 py-16">
-          <HeroSection />
-          <TriEyeModel />
-          <AgentConsole />
-          <VisualThreatGrid />
-          <DeploymentInterface />
-          <FeaturesSection />
-          <Testimonials />
-          <TechStack />
-          <AboutSection />
-          <ConsoleSection />
-          <ThreatFeed />
-          <DeploymentSection />
-          <Footer />
+      
+      {/* Main Content with higher z-index */}
+      <div className="relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-16 py-16">
+            <HeroSection />
+            <TriEyeModel />
+            <AgentConsole />
+            <VisualThreatGrid />
+            <DeploymentInterface />
+            <FeaturesSection />
+            <Testimonials />
+            <TechStack />
+            <AboutSection />
+            <ConsoleSection />
+            <ThreatFeed />
+            <DeploymentSection />
+            <Footer />
+          </div>
         </div>
       </div>
     </div>

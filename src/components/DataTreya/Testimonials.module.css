@@ -1,0 +1,73 @@
+.testimonialChar {
+  opacity: 0;
+  animation: fadeInChar 0.5s ease-out forwards;
+}
+
+@keyframes fadeInChar {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-10px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.testimonialContainer {
+  position: relative;
+  background: #0a0a0a;
+  border: 1px solid rgba(57, 255, 20, 0.5);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+  font-family: monospace;
+  color: rgba(57, 255, 20, 0.9);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.topLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(57, 255, 20, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.clientInfo {
+  font-size: 0.875rem;
+  color: rgba(57, 255, 20, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.quoteText {
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.bottomRightLine {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 1px;
+  background: rgba(57, 255, 20, 0.2);
+}
+
+.bottomRightLineVertical {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  height: 50%;
+  background: rgba(57, 255, 20, 0.2);
+}

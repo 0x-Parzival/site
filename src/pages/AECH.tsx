@@ -1,6 +1,20 @@
 // @ts-nocheck
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { 
+  FiPieChart, 
+  FiAward, 
+  FiZap, 
+  FiGlobe, 
+  FiLayers, 
+  FiShield, 
+  FiLock, 
+  FiUserCheck, 
+  FiKey, 
+  FiDollarSign, 
+  FiCheck, 
+  FiUsers 
+} from 'react-icons/fi';
 import HeroSection from '../components/AECH/HeroSection';
 import JoinSection from '../components/AECH/JoinSection';
 
@@ -142,17 +156,29 @@ const AECH: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
                   <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>What is AECH?</h3>
-                  <p className="text-gray-300">AECH is a revolutionary 3D blockchain-based financial operating system that unifies all your financial assets into a single, secure wallet. It bridges the gap between traditional banking, cryptocurrencies, and AI-powered investments.</p>
+                  <p className="text-gray-300">AECH is a revolutionary AI-driven 3D blockchain-based financial operating system that unifies all your financial assets—crypto, fiat, and AI investments—into one ultra-secure wallet. It seamlessly connects traditional banks, global currencies (INR, USD, EUR, etc.), blockchain assets, and intelligent automation in a single AI-governed ecosystem.</p>
                 </div>
                 
                 <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
                   <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Why 3D Blockchain?</h3>
-                  <p className="text-gray-300">Our proprietary 3D blockchain cube stores data in a spatially-indexed structure, with each axis representing Fiat, Crypto, and AI respectively. This enables unprecedented interoperability and security across financial systems.</p>
+                  <p className="text-gray-300">AECH introduces a proprietary 3D blockchain cube structure where:
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li><strong>X-Axis</strong> represents Crypto Assets</li>
+                    <li><strong>Y-Axis</strong> represents Fiat Currencies</li>
+                    <li><strong>Z-Axis</strong> represents AI Investments & Data</li>
+                  </ul>
+                  This multi-dimensional architecture enables unmatched security, seamless interoperability, and fully traceable financial activity across all domains.</p>
                 </div>
                 
                 <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>One Wallet for All</h3>
-                  <p className="text-gray-300">With AECH, you only need one wallet linked to all your bank accounts, crypto wallets, and fiat currencies. AECH Coin serves as the central currency, enabling seamless conversion between any currency across any blockchain or bank.</p>
+                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>One Wallet to Rule All Assets</h3>
+                  <p className="text-gray-300 mb-3">The AECH wallet unifies:</p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>Traditional bank accounts (INR, USD, etc.)</li>
+                    <li>Major cryptocurrencies (BTC, ETH, SOL, ADA, etc.)</li>
+                    <li>AI-powered assets & real-time analytics</li>
+                  </ul>
+                  <p className="text-gray-300 mt-3">The <strong>AECH Coin</strong> acts as the universal intermediary, enabling instant conversion, seamless transfers, and governance participation.</p>
                 </div>
               </div>
             </div>
@@ -182,121 +208,180 @@ const AECH: React.FC = () => {
             </div>
           </section>
           
-          {/* Features */}
-          <section className="py-20 px-6">
+          {/* Wallet Features */}
+          <section className="py-20 px-6 bg-black/50">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#00ffae' }}>Wallet Features</h2>
+              <h2 className="text-4xl font-bold mb-16 text-center" style={{ color: '#00ffae' }}>Wallet Features</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Unified Dashboard</h3>
-                  <p className="text-gray-300">View all your assets, investments, and transactions in one place. Real-time updates and AI-powered insights help you make informed decisions.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiPieChart /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Unified Dashboard</h3>
+                  <p className="text-gray-300">Visualize all your assets across fiat, crypto, and AI in real-time with an intelligent UI powered by adaptive machine learning.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Instant Conversions</h3>
-                  <p className="text-gray-300">Convert any currency to any other currency instantly with minimal fees. AECH's 3D blockchain ensures the best rates across all exchanges and banks.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiAward /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Zero-Loss AI Trader</h3>
+                  <p className="text-gray-300">Your personal AI trader uses deep reinforcement learning to ensure optimized investments across DeFi, CeFi, and TradFi with no loss, ever.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>AI Investment Advisor</h3>
-                  <p className="text-gray-300">Our proprietary AI analyzes market trends, your spending habits, and risk tolerance to provide personalized investment recommendations.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiZap /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Instant Global Conversion</h3>
+                  <p className="text-gray-300">Convert between INR ↔ BTC ↔ USD ↔ AECH Coin ↔ ETH instantly with intelligent routing across banks, blockchains, and exchanges.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Cross-Chain Compatibility</h3>
-                  <p className="text-gray-300">AECH works with all major blockchains including Ethereum, Solana, Cardano, and Bitcoin. New chains are added regularly through governance votes.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiGlobe /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Cross-Chain & Cross-Border</h3>
+                  <p className="text-gray-300">Works with all major blockchains: Ethereum, Solana, Cardano, Bitcoin, Polygon, and more. Supports 10,000+ banks & payment processors globally.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Bank Integration</h3>
-                  <p className="text-gray-300">Link your traditional bank accounts for seamless transfers between crypto and fiat. AECH is compatible with over 10,000 banks worldwide.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiLayers /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">DeFi Access Without Complexity</h3>
+                  <p className="text-gray-300">One-click access to staking, farming, lending, and yield protocols with optimized yield aggregation via the AI layer.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>DeFi Protocols</h3>
-                  <p className="text-gray-300">Access the best yields across DeFi with one click. Stake, farm, and earn passive income without navigating complex protocols manually.</p>
+                <div className="bg-gradient-to-br from-cyan-500/10 to-emerald-500/10 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm flex flex-col justify-center">
+                  <h3 className="text-2xl font-bold mb-4 text-cyan-300">Ready to Experience AECH?</h3>
+                  <p className="text-gray-300 mb-6">Join our waitlist to be among the first to access the future of finance.</p>
+                  <button 
+                    onClick={() => setShowEarlyAccessPopup(true)}
+                    className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold rounded-lg hover:opacity-90 transition-all duration-300 w-full"
+                  >
+                    Join Waitlist
+                  </button>
                 </div>
               </div>
             </div>
           </section>
           
           {/* Security */}
-          <section className="py-20 px-6 bg-gradient-to-b from-transparent to-black/50">
+          <section className="py-20 px-6 bg-gradient-to-b from-black/50 to-transparent">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#00ffae' }}>Unbreakable Security</h2>
+              <h2 className="text-4xl font-bold mb-16 text-center" style={{ color: '#00ffae' }}>Unbreakable Security</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Quantum Encryption</h3>
-                  <p className="text-gray-300">AECH utilizes post-quantum cryptography to ensure your assets remain secure even against quantum computer attacks.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiShield /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Quantum-Resistant Encryption</h3>
+                  <p className="text-gray-300">Post-quantum cryptography ensures your assets remain secure against emerging quantum computing threats, future-proofing your investments.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Multi-Dimensional Keys</h3>
-                  <p className="text-gray-300">Your private keys are split across multiple dimensions of the blockchain cube, making them impossible to extract without proper authorization.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiLock /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Multi-Dimensional Key Sharding</h3>
+                  <p className="text-gray-300">Your private keys are fragmented across the blockchain cube, making them impossible to extract without full spatial validation.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Biometric Security</h3>
-                  <p className="text-gray-300">Multi-factor authentication using fingerprint, facial recognition, and voice patterns. Your wallet is as unique as you are.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiUserCheck /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Biometric Multi-Factor Auth</h3>
+                  <p className="text-gray-300">Facial, fingerprint, and voice recognition combined with AI threat detection for maximum security without compromising convenience.</p>
                 </div>
                 
-                <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                  <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Non-Duplicable Identity</h3>
-                  <p className="text-gray-300">Your AECH identity cannot be copied or stolen. Our proprietary technology ensures that only you can access your financial universe.</p>
+                <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
+                  <div className="text-3xl mb-4 text-cyan-400"><FiKey /></div>
+                  <h3 className="text-xl font-bold mb-4 text-cyan-300">Non-Clonable AECH Identity</h3>
+                  <p className="text-gray-300">Each user has a non-replicable cryptographic identity that cannot be forged or stolen, ensuring complete ownership and control.</p>
+                </div>
+              </div>
+              
+              <div className="mt-16 text-center">
+                <p className="text-gray-400 mb-6">AECH's security infrastructure is built on military-grade encryption and decentralized validation</p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <span className="px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-full text-sm font-medium">End-to-End Encrypted</span>
+                  <span className="px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-full text-sm font-medium">Zero-Knowledge Proofs</span>
+                  <span className="px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-full text-sm font-medium">Decentralized Storage</span>
+                  <span className="px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-full text-sm font-medium">Smart Contract Audited</span>
                 </div>
               </div>
             </div>
           </section>
           
           {/* Ecosystem */}
-          <section className="py-20 px-6">
+          <section className="py-20 px-6 bg-gradient-to-b from-transparent to-black/50">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#00ffae' }}>AECH Ecosystem</h2>
+              <h2 className="text-4xl font-bold mb-16 text-center" style={{ color: '#00ffae' }}>AECH Ecosystem</h2>
               
-              <div className="bg-black bg-opacity-50 p-8 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-gradient-to-br from-cyan-500/10 to-emerald-500/10 p-8 rounded-2xl border border-cyan-500/20 backdrop-blur-sm">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                   <div>
-                    <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>AECH Coin Utility</h3>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>Transaction fees</span>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-3 rounded-lg bg-cyan-500/20 text-cyan-400">
+                        <FiDollarSign size={24} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-cyan-300">AECH Coin Utility</h3>
+                    </div>
+                    <ul className="space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mt-1 mr-3">
+                          <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <FiCheck className="text-cyan-400" size={14} />
+                          </div>
+                        </div>
+                        <span className="text-gray-300">Transaction gas across all chains</span>
                       </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>Governance voting</span>
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mt-1 mr-3">
+                          <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <FiCheck className="text-cyan-400" size={14} />
+                          </div>
+                        </div>
+                        <span className="text-gray-300">Governance voting and ecosystem proposals</span>
                       </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>Staking rewards</span>
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mt-1 mr-3">
+                          <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <FiCheck className="text-cyan-400" size={14} />
+                          </div>
+                        </div>
+                        <span className="text-gray-300">Staking and yield farming</span>
                       </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>AI profit sharing</span>
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mt-1 mr-3">
+                          <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <FiCheck className="text-cyan-400" size={14} />
+                          </div>
+                        </div>
+                        <span className="text-gray-300">AI trader revenue sharing</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div>
-                    <h3 className="text-xl font-bold mb-4" style={{ color: '#00ffcc' }}>Partners</h3>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>Major banks worldwide</span>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-3 rounded-lg bg-cyan-500/20 text-cyan-400">
+                        <FiUsers size={24} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-cyan-300">Partners</h3>
+                    </div>
+                    <ul className="space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mt-1 mr-3">
+                          <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <FiCheck className="text-cyan-400" size={14} />
+                          </div>
+                        </div>
+                        <span className="text-gray-300">Global banks, centralized and decentralized exchanges</span>
                       </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>Leading blockchains</span>
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mt-1 mr-3">
+                          <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <FiCheck className="text-cyan-400" size={14} />
+                          </div>
+                        </div>
+                        <span className="text-gray-300">AI labs and quantum research institutions</span>
                       </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>Payment processors</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-cyan-400">•</span>
-                        <span>AI research institutes</span>
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mt-1 mr-3">
+                          <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <FiCheck className="text-cyan-400" size={14} />
+                          </div>
+                        </div>
+                        <span className="text-gray-300">Web3 projects, stablecoin providers, and liquidity bridges</span>
                       </li>
                     </ul>
                   </div>

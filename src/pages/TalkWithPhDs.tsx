@@ -1,75 +1,139 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  FiArrowRight, 
-  FiBookOpen,
-  FiClock, 
-  FiCode, 
-  FiDollarSign,
-  FiGithub,
-  FiLinkedin,
+  FiMessageSquare, 
+  FiX, 
+  FiCheck, 
+  FiStar, 
+  FiTwitter, 
+  FiLinkedin, 
+  FiGithub, 
   FiMail,
-  FiMenu,
-  FiMessageSquare,
-  FiRefreshCw,
-  FiSearch,
-  FiStar,
-  FiTwitter,
   FiUsers,
-  FiX
+  FiCode,
+  FiSearch,
+  FiRefreshCw
 } from 'react-icons/fi';
+import { FaDiscord } from 'react-icons/fa';
 
-// Add 3D cube animation styles
-const styles = `
-  @keyframes spin-slow {
-    from { transform: rotateY(0deg) rotateX(0deg); }
-    to { transform: rotateY(360deg) rotateX(360deg); }
-  }
-  
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-  
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-  
-  .animate-spin-slow {
-    animation: spin-slow 20s linear infinite;
-    transform-style: preserve-3d;
-  }
-  
-  .transform-rotate-y-180 {
-    transform: rotateY(180deg);
-  }
-  
-  .transform-rotate-y-90 {
-    transform: rotateY(90deg);
-  }
-  
-  .transform-rotate-y-270 {
-    transform: rotateY(270deg);
-  }
-  
-  .transform-rotate-x-90 {
-    transform: rotateX(90deg);
-  }
-  
-  .transform-rotate-x-270 {
-    transform: rotateX(270deg);
-  }
-  
-  .transform-style-preserve-3d {
-    transform-style: preserve-3d;
-  }
-`;
+// Styled components for the nand.aka page
+// Type definitions
+// Product type will be defined later in the file
 
-// Add styles to the document head
-if (typeof document !== 'undefined') {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = styles;
-  document.head.appendChild(styleElement);
-}
+type ExpertType = 'ai' | 'human';
+
+type HeroProps = {
+  onProductSelect: (product: Product) => void;
+};
+
+type ExpertTypeSelectorProps = {
+  activeTab: ExpertType;
+  onTabChange: (tab: ExpertType) => void;
+};
+
+const Container = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+  <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+    {children}
+  </div>
+);
+
+const Section = ({ children, id = '', className = '' }: { children: React.ReactNode; id?: string; className?: string }) => (
+  <section id={id} className={`py-16 md:py-24 ${className}`}>
+    <Container>
+      {children}
+    </Container>
+  </section>
+);
+
+const Button = ({ children, variant = 'primary', className = '', ...props }: { children: React.ReactNode; variant?: 'primary' | 'secondary' | 'outline'; } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+  const baseStyles = 'px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2';
+  const variants = {
+    primary: 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white',
+    secondary: 'bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white',
+    outline: 'border-2 border-cyan-500 text-cyan-500 hover:bg-cyan-500/10'
+  };
+  
+  return (
+    <button 
+      className={`${baseStyles} ${variants[variant]} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => (
+  <div className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-cyan-500/30 transition-all duration-300">
+    <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-xl mb-4">
+      {icon}
+    </div>
+    <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
+    <p className="text-gray-400">{description}</p>
+  </div>
+);
+
+type PricingCardProps = {
+  title: string;
+  price: number | string;
+  period: string;
+  description?: string;
+  features: string[];
+  buttonText?: string;
+  isPopular?: boolean;
+  className?: string;
+  onSelect?: () => void;
+};
+
+const PricingCard = ({ 
+  title, 
+  price, 
+  period, 
+  description = '', 
+  features, 
+  buttonText = 'Get Started',
+  isPopular = false,
+  className = '',
+  onSelect
+}: PricingCardProps) => (
+  <div className={`relative h-full flex flex-col ${className}`}>
+    {isPopular && (
+      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
+        MOST POPULAR
+      </div>
+    )}
+    <div className={`flex-1 bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border ${isPopular ? 'border-cyan-500/50' : 'border-gray-800'} flex flex-col`}>
+      <h3 className="text-2xl font-bold text-white mb-2">{title}</h3>
+      <p className="text-gray-400 mb-6">{description}</p>
+      
+      <div className="mt-4 mb-6">
+        <span className="text-4xl font-bold text-white">{price}</span>
+        <span className="text-gray-400">/{period}</span>
+      </div>
+      
+      <ul className="space-y-3 mb-8">
+        {features.map((feature, index) => (
+          <li key={index} className="flex items-start">
+            <FiCheck className="text-green-400 mt-1 mr-2 flex-shrink-0" />
+            <span className="text-gray-300">{feature}</span>
+          </li>
+        ))}
+      </ul>
+      
+      <div className="mt-auto">
+        <Button 
+          variant={isPopular ? 'secondary' : 'outline'} 
+          className="w-full"
+          onClick={onSelect}
+        >
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  </div>
+);
+
+
 
 // Header Component
 const Header = () => {
@@ -262,27 +326,197 @@ const UnderConstructionModal = ({ isOpen, onClose }: { isOpen: boolean; onClose:
 };
 
 // 3D Hologram Cube Component
-const HologramCube = () => (
-  <div className="relative w-64 h-64 mx-auto my-12 perspective-1000">
-    <div className="relative w-full h-full preserve-3d transform-style-preserve-3d animate-spin-slow">
-      {/* Front */}
-      <div className="absolute w-full h-full border-2 border-cyan-400/50 bg-cyan-500/10" />
-      {/* Back */}
-      <div className="absolute w-full h-full border-2 border-purple-400/50 bg-purple-500/10 transform-rotate-y-180" />
-      {/* Left */}
-      <div className="absolute w-full h-full border-2 border-pink-400/50 bg-pink-500/10 transform-rotate-y-90" />
-      {/* Right */}
-      <div className="absolute w-full h-full border-2 border-cyan-400/50 bg-cyan-500/10 transform-rotate-y-270" />
-      {/* Top */}
-      <div className="absolute w-full h-full border-2 border-purple-400/50 bg-purple-500/10 transform-rotate-x-90" />
-      {/* Bottom */}
-      <div className="absolute w-full h-full border-2 border-pink-400/50 bg-pink-500/10 transform-rotate-x-270" />
+const HologramCube = () => {
+  const cubeSize = 200; // Size of the cube in pixels
+  const halfSize = cubeSize / 2;
+  
+  return (
+    <div className="relative w-64 h-64 mx-auto my-12" style={{ 
+      perspective: '1000px',
+      transformStyle: 'preserve-3d',
+      zIndex: 10 // Ensure it's above the particle background
+    }}>
+      <div 
+        className="relative w-full h-full"
+        style={{
+          transformStyle: 'preserve-3d',
+          animation: 'spin 15s linear infinite',
+          transform: 'rotateX(-15deg) rotateY(25deg)',
+          width: '100%',
+          height: '100%',
+          position: 'relative'
+        }}
+      >
+        {/* Front */}
+        <div 
+          className="absolute flex items-center justify-center text-white/80 text-sm font-mono"
+          style={{
+            width: `${cubeSize}px`,
+            height: `${cubeSize}px`,
+            border: '2px solid rgba(34, 211, 238, 0.7)',
+            background: 'rgba(34, 211, 238, 0.15)',
+            transform: `translateZ(${halfSize}px)`,
+            backfaceVisibility: 'visible',
+            boxShadow: '0 0 15px rgba(34, 211, 238, 0.5)',
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          nand.aka
+        </div>
+        
+        {/* Back */}
+        <div 
+          className="absolute flex items-center justify-center text-white/80 text-sm font-mono"
+          style={{
+            width: `${cubeSize}px`,
+            height: `${cubeSize}px`,
+            border: '2px solid rgba(192, 132, 252, 0.7)',
+            background: 'rgba(192, 132, 252, 0.15)',
+            transform: `rotateY(180deg) translateZ(${halfSize}px)`,
+            backfaceVisibility: 'visible',
+            boxShadow: '0 0 15px rgba(192, 132, 252, 0.5)',
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          nand.aka
+        </div>
+        
+        {/* Left */}
+        <div 
+          className="absolute flex items-center justify-center"
+          style={{
+            width: `${cubeSize}px`,
+            height: `${cubeSize}px`,
+            border: '2px solid rgba(236, 72, 153, 0.7)',
+            background: 'rgba(236, 72, 153, 0.15)',
+            transform: `rotateY(-90deg) translateZ(${halfSize}px)`,
+            backfaceVisibility: 'visible',
+            boxShadow: '0 0 15px rgba(236, 72, 153, 0.5)',
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          <div className="absolute w-full h-full bg-gradient-to-r from-transparent to-pink-500/20" />
+        </div>
+        
+        {/* Right */}
+        <div 
+          className="absolute flex items-center justify-center"
+          style={{
+            width: `${cubeSize}px`,
+            height: `${cubeSize}px`,
+            border: '2px solid rgba(34, 211, 238, 0.7)',
+            background: 'rgba(34, 211, 238, 0.15)',
+            transform: `rotateY(90deg) translateZ(${halfSize}px)`,
+            backfaceVisibility: 'visible',
+            boxShadow: '0 0 15px rgba(34, 211, 238, 0.5)',
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          <div className="absolute w-full h-full bg-gradient-to-l from-transparent to-cyan-500/20" />
+        </div>
+        
+        {/* Top */}
+        <div 
+          className="absolute flex items-center justify-center"
+          style={{
+            width: `${cubeSize}px`,
+            height: `${cubeSize}px`,
+            border: '2px solid rgba(192, 132, 252, 0.7)',
+            background: 'rgba(192, 132, 252, 0.15)',
+            transform: `rotateX(90deg) translateZ(${halfSize}px)`,
+            backfaceVisibility: 'visible',
+            boxShadow: '0 0 15px rgba(192, 132, 252, 0.5)',
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          <div className="absolute w-full h-full bg-gradient-to-b from-transparent to-purple-500/20" />
+        </div>
+        
+        {/* Bottom */}
+        <div 
+          className="absolute flex items-center justify-center"
+          style={{
+            width: `${cubeSize}px`,
+            height: `${cubeSize}px`,
+            border: '2px solid rgba(236, 72, 153, 0.7)',
+            background: 'rgba(236, 72, 153, 0.15)',
+            transform: `rotateX(-90deg) translateZ(${halfSize}px)`,
+            backfaceVisibility: 'visible',
+            boxShadow: '0 0 15px rgba(236, 72, 153, 0.5)',
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          <div className="absolute w-full h-full bg-gradient-to-t from-transparent to-pink-500/20" />
+        </div>
+        
+        {/* Inner Glow */}
+        <div 
+          className="absolute"
+          style={{
+            width: `${cubeSize * 1.5}px`,
+            height: `${cubeSize * 1.5}px`,
+            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0) 70%)',
+            transform: 'translateZ(-100px)',
+            borderRadius: '50%',
+            filter: 'blur(10px)',
+            left: '50%',
+            top: '50%',
+            marginLeft: `${-cubeSize * 0.75}px`,
+            marginTop: `${-cubeSize * 0.75}px`,
+            zIndex: -1
+          }}
+        />
+      </div>
+      
+      <style jsx global>{`
+        @keyframes spin {
+          from { 
+            transform: rotateY(0deg) rotateX(-15deg) rotateY(25deg); 
+          }
+          to { 
+            transform: rotateY(360deg) rotateX(-15deg) rotateY(25deg); 
+          }
+        }
+        
+        /* Ensure content is above particle background */
+        .relative.z-10 {
+          position: relative;
+          z-index: 10 !important;
+        }
+        
+        /* Fix for particle.js container */
+        #particles-js {
+          position: absolute !important;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1 !important;
+          pointer-events: none;
+        }
+      `}</style>
     </div>
-  </div>
-);
+  );
+};
 
-// Product Purchase Modal
-const ProductPurchaseModal = ({ isOpen, onClose, product }) => {
+// Product type definition
+type Product = {
+  id: string;
+  name: string;
+  price: number | string;
+  image: string;
+  description: string;
+};
+
+// Product Purchase Modal props type
+type ProductPurchaseModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  product: Product | null;
+};
+
+// Product Purchase Modal component
+const ProductPurchaseModal: React.FC<ProductPurchaseModalProps> = ({ isOpen, onClose, product }) => {
   if (!isOpen || !product) return null;
   
   return (
@@ -338,7 +572,7 @@ const ProductPurchaseModal = ({ isOpen, onClose, product }) => {
 };
 
 // Hero Section
-const Hero = () => {
+const Hero = ({ onProductSelect }: HeroProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   
@@ -350,20 +584,32 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative py-32 px-4 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+    <section id="home" className="relative min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden" style={{ zIndex: 1 }}>
+      {/* Background Pattern - Behind particles */}
+      <div className="absolute inset-0 opacity-5" style={{ zIndex: 1 }}>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMjEgM2MxLjY1NyAwIDMgMS4zNDMgMyAzdjMuNjA5YzAgLjg4My0uNzE3IDEuNTk4LTEuNiAxLjU5OGgtNC44Yy0uODgzIDAtMS42LS43MTUtMS42LTEuNlY2YzAtMS42NTcgMS4zNDMtMyAzLTN6TTMgMjFjMC0xLjY1NyAxLjM0My0zIDMtM2gzLjYwOWMuODgzIDAgMS42LjcxNyAxLjYgMS42djQuOGMwIC44ODMtLjcxNyAxLjYtMS42IDEuNkg2Yy0xLjY1NyAwLTMtMS4zNDMtMy0zek0yMSAzN2MxLjY1NyAwIDMtMS4zNDMgMy0zdi0zLjYwOWMwLS44ODMuNzE3LTEuNiAxLjYtMS42aDQuOGMuODgzIDAgMS42LjcxNyAxLjYgMS42VjM0YzAgMS42NTctMS4zNDMgMy0zIDNoLTMuNjA5Yy0uODgzIDAtMS42LS43MTctMS42LTEuNnYtLjJIMjF6TTM3IDIxYzAtMS42NTctMS4zNDMtMy0zLTNoLTMuNjA5Yy0uODgzIDAtMS42LjcxNy0xLjYgMS42djQuOGMwIC44ODMuNzE3IDEuNiAxLjYgMS42SDM0YzEuNjU3IDAgMy0xLjM0MyAzLTN6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
       </div>
       
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="relative z-10 text-center max-w-4xl mx-auto">
+      {/* Particle.js container - Middle layer */}
+      <div id="particles-js" style={{
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        zIndex: 2,
+        pointerEvents: 'none'
+      }} />
+      
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={{ zIndex: 3 }}>
+        <div className="text-center">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block mb-6"
+            transition={{ delay: 0.1 }}
+            className="mb-8 md:mb-12"
           >
-            <div className="relative">
+            <div className="relative w-48 h-48 md:w-64 md:h-64 mx-auto">
               <HologramCube />
             </div>
           </motion.div>
@@ -371,7 +617,8 @@ const Hero = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400"
+            transition={{ delay: 0.2 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400"
           >
             Welcome to nand.aka
           </motion.h1>
@@ -379,8 +626,8 @@ const Hero = () => {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-300 mb-10 px-4"
+            transition={{ delay: 0.3 }}
+            className="text-lg md:text-xl lg:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto px-4"
           >
             Your AI-Powered Digital Companion for intelligent conversations and personalized assistance.
           </motion.p>
@@ -389,20 +636,43 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mt-8"
           >
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-              <button
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-medium rounded-lg shadow-lg transform transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50"
-                onClick={() => window.open('https://github.com/yourusername/nand.aka', '_blank')}
-                aria-label="View on GitHub"
-              >
-                <FiGithub className="w-5 h-5" />
-                View on GitHub
-              </button>
-            </div>
+            <button
+              className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-medium rounded-lg shadow-lg transform transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50 text-base sm:text-lg"
+              onClick={() => window.open('https://github.com/yourusername/nand.aka', '_blank')}
+              aria-label="View on GitHub"
+            >
+              <FiGithub className="w-5 h-5" />
+              View on GitHub
+            </button>
+            
+            <button
+              onClick={() => scrollToSection('pricing')}
+              className="flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 font-medium rounded-lg shadow-lg transform transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50 text-base sm:text-lg"
+            >
+              <FiStar className="w-5 h-5" />
+              View Pricing
+            </button>
           </motion.div>
           
-
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mt-16"
+          >
+            <button 
+              onClick={() => scrollToSection('how-it-works')}
+              className="flex flex-col items-center text-cyan-400 hover:text-cyan-300 transition-colors"
+              aria-label="Scroll down"
+            >
+              <span className="mb-2 text-sm font-medium">Learn more</span>
+              <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </button>
+          </motion.div>
         </div>
       </div>
       
@@ -417,7 +687,7 @@ const Hero = () => {
 };
 
 // Expert Type Selector
-const ExpertTypeSelector = () => {
+const ExpertTypeSelector = ({ activeTab, onTabChange }: ExpertTypeSelectorProps) => {
   const [selected, setSelected] = useState<'ai' | 'human'>('ai');
 
   return (
@@ -1043,18 +1313,135 @@ const Footer = () => {
 
 // Main Component
 const TalkWithPhDs = () => {
+  const [activeTab, setActiveTab] = React.useState<'ai' | 'human'>('ai');
+  const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null);
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = React.useState(false);
+  const [isUnderConstructionOpen, setIsUnderConstructionOpen] = React.useState(false);
+
+  const handleProductSelect = (product: Product) => {
+    setSelectedProduct(product);
+    setIsPurchaseModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Header />
-      <main className="relative z-10">
-        <div className="pt-24">
-          <Hero />
-          <ExpertTypeSelector />
-          <AIExpertForm />
-          <HumanExperts />
-        </div>
+      
+      <main>
+        <Hero onProductSelect={handleProductSelect} />
+        
+        <Section id="how-it-works">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Get expert guidance in minutes, not days. Choose between our AI assistant or connect with human experts.
+            </p>
+          </div>
+          
+          <ExpertTypeSelector activeTab={activeTab} onTabChange={setActiveTab} />
+          
+          <div className="mt-12">
+            {activeTab === 'ai' ? <AIExpertForm /> : <HumanExperts />}
+          </div>
+        </Section>
+        
+        <Section id="features" className="bg-gray-800/50">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us</h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Get the best of both worlds with AI and human expertise
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 mt-12">
+            <FeatureCard
+              icon={<FiMessageSquare />}
+              title="AI-Powered Assistance"
+              description="Get instant answers to your questions with our advanced AI trained on expert knowledge."
+            />
+            <FeatureCard
+              icon={<FaDiscord />}
+              title="Human Experts"
+              description="Connect with verified PhDs and industry experts for personalized guidance."
+            />
+            <FeatureCard
+              icon={<FiMessageSquare />}
+              title="Flexible Options"
+              description="Choose between quick AI responses or in-depth human consultations."
+            />
+          </div>
+        </Section>
+        
+        <Section id="pricing">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Choose the plan that works best for you
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <PricingCard
+              title="Starter"
+              price={9}
+              period="month"
+              description="Perfect for individuals getting started"
+              features={["10 AI queries/month", "Basic support", "Email assistance"]}
+              isPopular={false}
+              onSelect={() => handleProductSelect({
+                id: 'starter',
+                name: 'Starter Plan',
+                price: '9',
+                description: 'Perfect for individuals getting started',
+                image: '/images/plans/starter.jpg'
+              })}
+            />
+            <PricingCard
+              title="Pro"
+              price={29}
+              period="month"
+              description="Ideal for professionals and small teams"
+              features={["50 AI queries/month", "Priority support", "1 human consultation"]}
+              isPopular={true}
+              onSelect={() => handleProductSelect({
+                id: 'pro',
+                name: 'Pro Plan',
+                price: '29',
+                description: 'Ideal for professionals and small teams',
+                image: '/images/plans/pro.jpg'
+              })}
+            />
+            <PricingCard
+              title="Enterprise"
+              price={99}
+              period="month"
+              description="For teams and businesses with advanced needs"
+              features={["Unlimited AI queries", "24/7 support", "5 human consultations"]}
+              isPopular={false}
+              onSelect={() => handleProductSelect({
+                id: 'enterprise',
+                name: 'Enterprise Plan',
+                price: '99',
+                description: 'For teams and businesses with advanced needs',
+                image: '/images/plans/enterprise.jpg'
+              })}
+            />
+          </div>
+        </Section>
       </main>
+      
       <Footer />
+      
+      <ProductPurchaseModal
+        isOpen={isPurchaseModalOpen}
+        onClose={() => setIsPurchaseModalOpen(false)}
+        product={selectedProduct}
+      />
+      
+      <UnderConstructionModal
+        isOpen={isUnderConstructionOpen}
+        onClose={() => setIsUnderConstructionOpen(false)}
+      />
     </div>
   );
 };

@@ -1,10 +1,7 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiBookOpen, FiDownload, FiHeart, FiExternalLink } from 'react-icons/fi';
 import ParticleBackground from '../components/ParticleBackground';
-
-// Lazy load components
-const BhagwatamAnalysis = lazy(() => import('../components/BhagwatamAnalysis'));
-const TelepathyTelekinesisAnalysis = lazy(() => import('../components/TelepathyTelekinesisAnalysis'));
 
 interface PDFItem {
   id: string;
@@ -33,21 +30,18 @@ interface NGO {
 }
 
 const Spirituality = () => {
-  const [showBhagwatamPopup, setShowBhagwatamPopup] = useState(false);
-  const [showTelepathyPopup, setShowTelepathyPopup] = useState(false);
+  const navigate = useNavigate();
 
   const handleReadNow = (pdfId: string) => {
     if (pdfId === '1') {
-      setShowBhagwatamPopup(true);
-    } else if (pdfId === '2') {
-      setShowTelepathyPopup(true);
+      navigate('/bhagwatam-analysis');
     } else {
       // Open other PDFs in a new tab
       window.open('#', '_blank');
     }
   };
 
-  // Sample data
+  // Sample data - 10 duplicates of the first item
   const [pdfs] = useState<PDFItem[]>([
     {
       id: '1',
@@ -58,17 +52,66 @@ const Spirituality = () => {
     },
     {
       id: '2',
-      title: 'Interactive Exploration: Telepathy & Telekinesis',
-      description: 'A comprehensive analysis of telepathic and telekinetic phenomena through scientific and historical lenses',
+      title: 'Bhagwatam Puran: Volume II - Deeper Insights',
+      description: 'Further exploration of the Bhagwatam Puran with advanced analytical perspectives',
       fileUrl: '#',
-      thumbnail: 'https://www.verywellmind.com/thmb/0QnUeQzW9B3PbLpeFgox2T1Tj8g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-telekinesis-4582442_final-5c7d6c3e4cedfd0001c2d6c7.png'
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
     },
     {
-      id: '2',
-      title: 'The Seven Spiritual Laws of Success',
-      description: 'Practical guide to achieving your goals through spiritual principles',
-      fileUrl: '/pdfs/seven-spiritual-laws.pdf',
-      thumbnail: '/images/books/seven-laws.jpg'
+      id: '3',
+      title: 'Bhagwatam Puran: The Divine Chronicles',
+      description: 'Chronicles of divine events and their spiritual significance',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
+    },
+    {
+      id: '4',
+      title: 'Bhagwatam Puran: Wisdom of the Ages',
+      description: 'Timeless wisdom from the ancient scriptures for modern seekers',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
+    },
+    {
+      id: '5',
+      title: 'Bhagwatam Puran: Mysteries Unveiled',
+      description: 'Unveiling the hidden mysteries within the sacred text',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
+    },
+    {
+      id: '6',
+      title: 'Bhagwatam Puran: The Eternal Truth',
+      description: 'Exploring the eternal truths revealed in the Bhagwatam',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
+    },
+    {
+      id: '7',
+      title: 'Bhagwatam Puran: Spiritual Journey',
+      description: 'A guided journey through the spiritual landscape of Bhagwatam',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
+    },
+    {
+      id: '8',
+      title: 'Bhagwatam Puran: Divine Wisdom',
+      description: 'Divine wisdom and teachings from the sacred text',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
+    },
+    {
+      id: '9',
+      title: 'Bhagwatam Puran: Sacred Stories',
+      description: 'Sacred stories and their deeper spiritual meanings',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
+    },
+    {
+      id: '10',
+      title: 'Bhagwatam Puran: The Final Chapter',
+      description: 'Concluding insights from the Bhagwatam Puran',
+      fileUrl: '#',
+      thumbnail: 'https://astrotalk.com/astrology-blog/wp-content/uploads/2020/07/main-qimg-8009d816c05d0551887f4454cc07c601.png'
     }
   ]);
 
@@ -112,11 +155,9 @@ const Spirituality = () => {
     // Add more NGOs as needed
   ]);
 
-
-
   // Add glow effect to text
   const glowText = {
-    textShadow: '0 0 10px #00d9ff, 0 0 20px #00d9ff, 0 0 30px #00d9ff',
+    textShadow: '0 0 5px #00d9ff, 0 0 10px #00d9ff, 0 0 15px #00d9ff',
   };
 
   // Add glow effect to borders
@@ -153,7 +194,7 @@ const Spirituality = () => {
           <div className="mt-6 grid gap-6">
             {pdfs.map((pdf) => (
               <div 
-                key={pdf.id} 
+                key={pdf.id}
                 className="relative bg-black/30 backdrop-blur-sm rounded-xl p-6 transition-all duration-500 hover:scale-[1.02] overflow-hidden group"
                 style={{
                   ...glowBorder,
@@ -176,10 +217,10 @@ const Spirituality = () => {
                     <h3 className="text-lg font-medium text-[#00d9ff] tracking-wide">{pdf.title}</h3>
                     <p className="mt-1 text-sm text-gray-300">{pdf.description}</p>
                     <div className="mt-4">
-                        <button
-                          onClick={() => handleReadNow(pdf.id)}
-                          className="inline-flex items-center text-sm font-medium text-[#ff00f7] hover:text-[#00d9ff] transition-all duration-200 group-hover:tracking-wider"
-                        >
+                      <button
+                        onClick={() => handleReadNow(pdf.id)}
+                        className="inline-flex items-center text-sm font-medium text-[#ff00f7] hover:text-[#00d9ff] transition-all duration-200 group-hover:tracking-wider"
+                      >
                         <span className="relative">
                           <span className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00f7] to-[#00d9ff] rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-300"></span>
                           <span className="relative px-4 py-1.5 bg-black/80 rounded-lg flex items-center">
@@ -276,23 +317,6 @@ const Spirituality = () => {
           </div>
         </section>
       </div>
-      
-      {/* Analysis Popups */}
-{showBhagwatamPopup && (
-        <Suspense fallback={<div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="text-white text-lg">Loading Analysis...</div>
-        </div>}>
-          <BhagwatamAnalysis onClose={() => setShowBhagwatamPopup(false)} />
-        </Suspense>
-      )}
-      
-      {showTelepathyPopup && (
-        <Suspense fallback={<div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="text-white text-lg">Loading Analysis...</div>
-        </div>}>
-          <TelepathyTelekinesisAnalysis onClose={() => setShowTelepathyPopup(false)} />
-        </Suspense>
-      )}
     </div>
   );
 };

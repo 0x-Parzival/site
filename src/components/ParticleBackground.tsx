@@ -1,91 +1,86 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useParticles } from '../context/ParticlesContext';
-import { Particles } from '@tsparticles/react';
-import { loadSlim } from '@tsparticles/slim';
-import type { Engine } from '@tsparticles/engine';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
+import type { Engine } from 'tsparticles-engine';
 
 interface ParticleBackgroundProps {
   opacity?: number;
 }
 
-export default function ParticleBackground({ opacity: propOpacity }: ParticleBackgroundProps) {
-  const { opacity: contextOpacity } = useParticles();
-  const opacity = propOpacity !== undefined ? propOpacity : contextOpacity;
-
+const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ opacity = 0.5 }) => {
   const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine);
+    await loadFull(engine);
   }, []);
 
-  const options = {
-    fullScreen: { enable: false, zIndex: -1 },
-    background: { color: { value: 'transparent' } },
-    fpsLimit: 60,
-    particles: {
-      number: {
-        value: 80,
-        density: { enable: true, value_area: 800 }
-      },
-      color: { value: '#8b5cf6' },
-      shape: { type: 'circle' },
-      opacity: {
-        value: opacity,
-        random: true,
-        animation: {
-          enable: true,
-          speed: 1,
-          minimumValue: 0.1,
-          sync: false
-        }
-      },
-      size: {
-        value: { min: 1, max: 3 },
-        random: true,
-        animation: {
-          enable: true,
-          speed: 2,
-          minimumValue: 1,
-          sync: false
-        }
-      },
-      links: {
-        color: '#8b5cf6',
-        distance: 150,
-        enable: true,
-        opacity: 0.4,
-        width: 1
-      },
-      move: {
-        enable: true,
-        speed: 1,
-        direction: 'none' as const,
-        random: true,
-        straight: false,
-        outModes: { default: 'bounce' as const }
-      }
-    },
-    interactivity: {
-      detectsOn: 'window' as const,
-      events: {
-        onHover: { enable: true, mode: 'grab' },
-        onClick: { enable: true, mode: 'push' },
-        resize: { enable: true }
-      },
-      modes: {
-        grab: { distance: 140, links: { opacity: 0.8 } },
-        push: { quantity: 4 }
-      }
-    },
-    detectRetina: true
-  };
-
   return (
-    <div className="absolute inset-0 w-full h-full">
-      <Particles
-        id="tsparticles"
-        // @ts-ignore - Bypass type checking for the initialization prop
-        initParticlesEngine={particlesInit}
-        options={options as any}
-      />
-    </div>
+    <Particles
+      id="tsparticles"
+      init={particlesInit}
+      options={{
+        background: {
+          color: {
+            value: "transparent",
+          },
+        },
+        fpsLimit: 120,
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "repulse",
+            },
+            resize: true,
+          },
+          modes: {
+            repulse: {
+              distance: 200,
+              duration: 0.4,
+            },
+          },
+        },
+        particles: {
+          color: {
+            value: "#00d9ff",
+          },
+          links: {
+            color: "#00d9ff",
+            distance: 150,
+            enable: true,
+            opacity: opacity,
+            width: 1,
+          },
+          move: {
+            direction: "none",
+            enable: true,
+            outModes: {
+              default: "bounce",
+            },
+            random: false,
+            speed: 2,
+            straight: false,
+          },
+          number: {
+            density: {
+              enable: true,
+              value_area: 800,
+            },
+            value: 80,
+          },
+          opacity: {
+            value: opacity,
+          },
+          shape: {
+            type: "circle",
+          },
+          size: {
+            value: { min: 1, max: 5 },
+          },
+        },
+        detectRetina: true,
+      }}
+    />
   );
-}
+};
+
+export default ParticleBackground;

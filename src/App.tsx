@@ -1,20 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+// Page Imports
 import Home from './pages/Home';
 import WhoAmI from './pages/WhoAmI';
 import WhoIsShe from './pages/WhoIsShe';
-import Gesture from './pages/Gesture';
+import Spirituality from './pages/Spirituality';
 import AECH from './pages/AECH';
+import Gesture from './pages/Gesture';
 import { GhibliStore } from './pages/GhibliStore.clean';
 import TalkWithPhDs from './pages/TalkWithPhDs';
-import Spirituality from './pages/Spirituality';
+import NandAka from './pages/NandAka';
+import DevDat from './pages/DevDatNew';
+import DataTreyaPage from './pages/data-treya';
+import ExpertsTalk from './pages/ExpertsTalk/ExpertsTalk';
 import KalkiOS from './pages/KalkiOS/KalkiPage';
-import DevDat from './pages/DevDat';
-import ParticleBackgroundPreview from './pages/KalkiOS/components/ParticleBackground.preview';
+import GesturePage from './pages/gesture-ai/GesturePage';
 import { ThemeProvider } from './context/ThemeContext';
 import ParticleBackground from './components/ParticleBackground';
 import HomeButton from './components/HomeButton';
 import { ParticlesProvider, useParticles } from './context/ParticlesContext';
-import ExpertsTalk from './pages/ExpertsTalk';
+import TantraMeditations from './pages/TantraMeditations';
 
 function AppContent() {
   const { opacity } = useParticles();
@@ -33,21 +37,37 @@ function AppContent() {
         </div>
         
         <Routes>
+          {/* Main Navigation */}
           <Route path="/" element={<Home />} />
           <Route path="/whoami" element={<WhoAmI />} />
           <Route path="/whoishe" element={<WhoIsShe />} />
-          <Route path="/gesture" element={<Gesture />} />
+          
+          {/* Spirituality Section */}
+          <Route path="/spirituality" element={<Spirituality />} />
+          
+          {/* Projects */}
           <Route path="/aech" element={<AECH />} />
+          <Route path="/gesture" element={<Gesture />} />
           <Route path="/ghibli-store" element={<GhibliStore />} />
           <Route path="/talk-with-phds" element={<TalkWithPhDs />} />
           <Route path="/nand.aka" element={<TalkWithPhDs />} />
-          <Route path="/spirituality" element={<Spirituality />} />
-          <Route path="/kalkios" element={<KalkiOS />} />
-          <Route path="/kalki" element={<KalkiOS />} />
           <Route path="/dev-dat" element={<DevDat />} />
-          <Route path="/particles-preview" element={<ParticleBackgroundPreview />} />
+          
+          {/* Apps & Tools */}
+          <Route path="/data-treya" element={<DataTreyaPage />} />
           <Route path="/experts-talk" element={<ExpertsTalk />} />
-          <Route path="/talk" element={<ExpertsTalk />} />
+          <Route path="/kalkios" element={<KalkiOS />} />
+          <Route path="/gesture-ai" element={<GesturePage />} />
+          
+          {/* Redirects */}
+          <Route path="/kalki" element={<Navigate to="/kalkios" replace />} />
+          <Route path="/talk" element={<Navigate to="/experts-talk" replace />} />
+          
+          {/* Tantra Meditations */}
+          <Route path="/tantra-meditations" element={<TantraMeditations />} />
+          
+          {/* 404 - Keep this last */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </Router>

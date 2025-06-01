@@ -1,5 +1,7 @@
-const { test, expect } = require('@jest/globals');
+import '@testing-library/jest-dom';
 
-test('hello world!', () => {
-	expect(1 + 1).toBe(2);
+describe('Basic test', () => {
+  test('hello world!', () => {
+    expect(1 + 1).toBe(2);
+  });
 });
