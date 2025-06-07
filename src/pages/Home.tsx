@@ -14,7 +14,11 @@ const Button = ({ label, path, color, image }: ButtonProps) => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate(path);
+    if (path.endsWith('.html')) {
+      window.location.href = path;
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -103,7 +107,12 @@ const buttons: ButtonProps[] = [
     image: '/images/data-treya-button.png',
     logo: '/images/data-treya-logo.png'
   },
-
+  {
+    label: 'kalkiOS',
+    path: '/kalkiOS.html',
+    color: 'from-teal-500 to-cyan-600',
+    image: '/images/kalki os.png'
+  }
 ];
 
 export default function Home() {
