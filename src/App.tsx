@@ -21,6 +21,7 @@ import ParticleBackground from './components/ParticleBackground';
 import HomeButton from './components/HomeButton';
 import { ParticlesProvider, useParticles } from './context/ParticlesContext';
 import TantraMeditations from './pages/TantraMeditations';
+import AIAgency from './pages/AIAgency';
 
 function AppContent() {
   const { opacity } = useParticles();
@@ -48,6 +49,7 @@ function AppContent() {
           <Route path="/spirituality" element={<Spirituality />} />
           
           {/* Projects */}
+          <Route path="/ai-agency" element={<AIAgency />} />
           <Route path="/aech" element={<AECH />} />
           <Route path="/gesture" element={<Gesture />} />
           <Route path="/ghibli-store" element={<GhibliStore />} />

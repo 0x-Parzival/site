@@ -66,23 +66,90 @@ const buttons: ButtonProps[] = [
     image: '/images/who am i.jpg'
   },
   {
+    label: 'Who is She',
+    path: '/whoishe',
+    color: 'from-purple-600 to-indigo-700',
+    image: '/images/who am i.jpg'  // Using same image as whoami for now
+  },
+  {
+    label: 'Spirituality',
+    path: '/spirituality',
+    color: 'from-indigo-600 to-blue-700',
+    image: '/images/spirituality.jpg'  // You might want to add this image
+  },
+  {
+    label: 'AECH',
+    path: '/aech',
+    color: 'from-blue-600 to-cyan-700',
+    image: '/images/aech.png'
+  },
+  {
+    label: 'Gesture',
+    path: '/gesture',
+    color: 'from-cyan-600 to-teal-700',
+    image: '/images/gesture.png',
+    logo: '/images/gesture-logo.png'
+  },
+  {
+    label: 'Ghibli Store',
+    path: '/ghibli-store',
+    color: 'from-teal-600 to-green-700',
+    image: '/images/ghibli.jpg'  // You might want to add this image
+  },
+  {
+    label: 'Talk with PhDs',
+    path: '/talk-with-phds',
+    color: 'from-green-600 to-lime-600',
+    image: '/images/talk.jpg'  // You might want to add this image
+  },
+  {
+    label: 'Nand Aka',
+    path: '/nand.aka',
+    color: 'from-lime-600 to-yellow-600',
+    image: '/images/nand.jpg'  // You might want to add this image
+  },
+  {
+    label: 'Dev Dat',
+    path: '/dev-dat',
+    color: 'from-yellow-600 to-amber-600',
+    image: '/images/dev.jpg'  // You might want to add this image
+  },
+  {
+    label: 'Data Treya',
+    path: '/data-treya',
+    color: 'from-amber-600 to-orange-600',
+    image: '/images/data.jpg'  // You might want to add this image
+  },
+  {
+    label: 'Experts Talk',
+    path: '/experts-talk',
+    color: 'from-orange-600 to-red-600',
+    image: '/images/experts.jpg'  // You might want to add this image
+  },
+  {
     label: 'Kalki OS',
-    path: '/kalki',
-    color: 'from-cyan-600 to-blue-700',
+    path: '/kalkios',
+    color: 'from-red-600 to-pink-600',
     image: '/images/kalki os.png'
   },
   {
     label: 'Gesture AI',
     path: '/gesture-ai',
-    color: 'from-green-600 to-lime-600',
+    color: 'from-pink-600 to-rose-600',
     image: '/images/gesture.png',
     logo: '/images/gesture-logo.png'
   },
   {
-    label: 'Aech',
-    path: '/aech',
-    color: 'from-purple-600 to-indigo-700',
-    image: '/images/aech.png'
+    label: 'Tantra Meditations',
+    path: '/tantra-meditations',
+    color: 'from-rose-600 to-purple-600',
+    image: '/images/meditation.jpg'  // You might want to add this image
+  },
+  {
+    label: 'AI Agency',
+    path: '/ai-agency',
+    color: 'from-blue-500 to-indigo-700',
+    image: '/images/ai-agency.jpg'  // You might want to add this image
   }
 ];
 
@@ -104,7 +171,7 @@ export default function Home() {
           }}
         >
           <span className="inline-block animate-pulse">[</span>
-          WELCOME TO KESHAVBRUH.COM
+          SPIRITUALAI.ORG
           <span className="inline-block animate-pulse">]</span>
         </motion.h1>
         <motion.p 
@@ -119,22 +186,28 @@ export default function Home() {
           <span className="text-gray-400"> INITIALIZING NEURAL INTERFACE</span>
         </motion.p>
       </div>
-      <div className="relative z-10 p-4">
-        {/* First row with 5 buttons */}
-        <div className="flex justify-center items-center flex-wrap gap-6 mb-6">
-          {buttons.map((button, index) => index < 5 && (
-            <div key={index} className="transform transition-transform hover:scale-105" style={{ width: '300px' }}>
-              <Button {...button} />
-            </div>
-          ))}
-        </div>
-        {/* Second row with 2 buttons */}
-        <div className="flex justify-center items-center flex-wrap gap-6">
-          {buttons.map((button, index) => index >= 5 && (
-            <div key={index} className="transform transition-transform hover:scale-105" style={{ width: '300px' }}>
-              <Button {...button} />
-            </div>
-          ))}
+      <div className="relative z-10 p-4 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+          {buttons
+            .filter(button => ![
+              'Who is She', 
+              'Nand Aka', 
+              'Dev Dat', 
+              'Experts Talk', 
+              'Talk with PhDs', 
+              'Tantra Meditations'
+            ].includes(button.label))
+            .map((button, index) => (
+              <motion.div 
+                key={index} 
+                className="w-full max-w-xs transform transition-transform hover:scale-105"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+              >
+                <Button {...button} />
+              </motion.div>
+            ))}
         </div>
       </div>
       

@@ -4,15 +4,19 @@ import { FiArrowRight, FiClock, FiCode, FiLayers, FiZap } from 'react-icons/fi';
 
 // Header Component
 const Header = () => (
-  <header className="fixed w-full z-50 bg-black/30 backdrop-blur-md px-6 py-4">
+  <header className="fixed w-full z-50 bg-black/80 backdrop-blur-md px-6 py-4 border-b border-gray-800/50">
     <div className="max-w-7xl mx-auto flex justify-between items-center">
-      <div className="font-mono text-cyan-400 text-xl font-bold flex items-center">
+      <a href="/" className="font-mono text-cyan-400 text-xl font-bold flex items-center hover:opacity-80 transition-opacity">
         <span className="mr-2">⎔</span> Parzival
-      </div>
+      </a>
       <nav className="hidden md:flex space-x-8">
-        {['Home', 'Experts', 'Book a Call', 'About', 'Contact'].map((item) => (
-          <a key={item} href="#" className="text-gray-300 hover:text-cyan-400 transition-colors font-mono">
-            {item}
+        {['#experts', '#book-ai', '#book-human'].map((item) => (
+          <a 
+            key={item} 
+            href={item} 
+            className="text-gray-300 hover:text-cyan-400 transition-colors font-mono text-sm uppercase tracking-wider"
+          >
+            {item.replace('#', '')}
           </a>
         ))}
       </nav>
@@ -22,10 +26,10 @@ const Header = () => (
 
 // Hero Section
 const Hero = () => (
-  <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+  <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
     <div className="absolute inset-0 z-0">
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-black to-purple-900/20"></div>
-      <div id="particles-js" className="absolute inset-0"></div>
+      <div id="particles-js" className="absolute inset-0 z-0"></div>
     </div>
     
     <div className="relative z-10 text-center px-4">
@@ -78,6 +82,7 @@ const ExpertTypeSelector = () => {
       buttonText: 'Choose AI Expert',
       gradient: 'from-cyan-500/10 to-cyan-900/20',
       borderColor: 'border-cyan-500/30',
+      scrollTo: 'book-ai',
     },
     {
       id: 'human',
@@ -91,43 +96,71 @@ const ExpertTypeSelector = () => {
       buttonText: 'Choose Human Expert',
       gradient: 'from-purple-500/10 to-purple-900/20',
       borderColor: 'border-purple-500/30',
+      scrollTo: 'book-human',
     },
   ];
+  
+  const handleButtonClick = (tabId: string, scrollTo?: string) => {
+    setActiveTab(tabId);
+    if (scrollTo) {
+      const element = document.getElementById(scrollTo);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
-    <section className="py-20 px-4 relative">
+    <section className="py-20 px-4 relative z-20">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">
-          Choose Your Expert Type
-        </h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">
+            Choose Your Expert Type
+          </h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Select the type of expertise that best matches your needs
+          </p>
+        </motion.div>
         
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {expertTypes.map((type) => (
+          {expertTypes.map((type, index) => (
             <motion.div
               key={type.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5 }}
-              className={`p-8 rounded-2xl border ${type.borderColor} bg-gradient-to-br ${type.gradient} backdrop-blur-sm hover:shadow-lg transition-all`}
+              className={`p-8 rounded-2xl border ${type.borderColor} bg-gradient-to-br ${type.gradient} backdrop-blur-sm hover:shadow-lg transition-all relative z-10`}
             >
               <div className="text-center">
-                {type.icon}
-                <h3 className="text-2xl font-bold mb-4">{type.title}</h3>
-                <ul className="space-y-2 mb-6">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-black/30 mb-6">
+                  {type.icon}
+                </div>
+                <h3 className="text-2xl font-bold mb-6 text-white">{type.title}</h3>
+                <ul className="space-y-3 mb-8">
                   {type.features.map((feature, index) => (
-                    <li key={index} className="flex items-center">
-                      <span className="text-cyan-400 mr-2">▹</span>
-                      {feature}
+                    <li key={index} className="flex items-start">
+                      <span className="text-cyan-400 mr-3 mt-1">▹</span>
+                      <span className="text-gray-200 text-left">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 <button 
-                  onClick={() => setActiveTab(type.id)}
-                  className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                  onClick={() => handleButtonClick(type.id, type.scrollTo)}
+                  className={`px-8 py-3 rounded-full font-medium transition-all text-white ${
                     type.id === 'ai' 
-                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-[0_0_15px_rgba(34,211,238,0.5)]' 
-                      : 'bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-[0_0_15px_rgba(192,132,252,0.5)]'
-                  }`}
+                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]' 
+                      : 'bg-gradient-to-r from-purple-500 to-pink-600 hover:shadow-[0_0_20px_rgba(192,132,252,0.6)]'
+                  } hover:scale-105 transform transition-transform duration-200`}
                 >
-                  {type.buttonText}
+                  {type.buttonText} <FiArrowRight className="inline ml-2" />
                 </button>
               </div>
             </motion.div>
@@ -398,11 +431,19 @@ const ExpertsTalk = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white overflow-x-hidden">
       <Header />
-      <main>
+      <main className="relative z-10">
         <Hero />
-        <ExpertTypeSelector />
-        <AIExpertForm />
-        <HumanExperts />
+        <div className="relative z-20 bg-gradient-to-b from-transparent to-black/80">
+          <div id="experts" className="relative pt-20 pb-32">
+            <ExpertTypeSelector />
+          </div>
+          <div id="book-ai" className="relative py-20 bg-black/50">
+            <AIExpertForm />
+          </div>
+          <div id="book-human" className="relative py-20 bg-gradient-to-b from-black/50 to-gray-900">
+            <HumanExperts />
+          </div>
+        </div>
       </main>
       <Footer />
     </div>
