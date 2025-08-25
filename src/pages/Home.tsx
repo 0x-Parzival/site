@@ -195,7 +195,11 @@ export default function Home() {
               'Dev Dat', 
               'Experts Talk', 
               'Talk with PhDs', 
-              'Tantra Meditations'
+              'Tantra Meditations',
+              'Spirituality',
+              'Data Treya',
+              'AI Agency',
+              'Ghibli Store'
             ].includes(button.label))
             .map((button, index) => (
               <motion.div 
