@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 // Dynamically import react-globe.gl for Next.js compatibility (client-side only)
 // import Globe from 'react-globe.gl';
-import 'xterm/css/xterm.css'; // Already imported in ConsoleSection, but good for standalone use if needed
+// Removed xterm CSS import to fix compilation error
 
 // Sample data for arcs (representing attacks)
 const generateRandomArcsData = () => {

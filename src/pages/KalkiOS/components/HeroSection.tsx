@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Terminal } from 'xterm';
-import 'xterm/css/xterm.css';
 import RotatingSlogan from './RotatingSlogan';
 
 interface HeroSectionProps {
@@ -12,43 +10,6 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (terminalRef.current) {
-      const terminal = new Terminal({
-        theme: {
-          background: '#000000',
-          foreground: '#ffffff',
-          cursor: '#ffffff'
-        },
-        fontSize: 14
-      });
-
-      terminal.open(terminalRef.current);
-      
-      // Simulate typing animation
-      const commands = [
-        'sudo ignite_transcendence',
-        'Loading AI core...',
-        'Initializing quantum entanglement...',
-        'System ready.'
-      ];
-
-      const typeCommand = async (cmd: string, delay: number = 50) => {
-        for (let i = 0; i < cmd.length; i++) {
-          terminal.write(cmd[i]);
-          await new Promise(resolve => setTimeout(resolve, delay));
-        }
-        terminal.write('\r\n');
-      };
-
-      const animateTerminal = async () => {
-        for (const cmd of commands) {
-          await typeCommand(cmd);
-        }
-      };
-
-      animateTerminal();
-    }
-
     // Cleanup function to remove the class when component unmounts
     return () => {
       document.body.classList.remove('kalkios-page');
@@ -98,7 +59,12 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
 
           {/* Terminal Animation */}
           <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-11/12 max-w-4xl h-48">
-            <div ref={terminalRef} className="w-full h-full" />
+            <div className="w-full h-full bg-black/50 rounded-lg border border-gray-800 p-4 font-mono text-green-400 text-sm">
+              <div>sudo ignite_transcendence</div>
+              <div>Loading AI core...</div>
+              <div>Initializing quantum entanglement...</div>
+              <div>System ready.</div>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -121,8 +87,12 @@ const HeroSection: React.FC<HeroSectionProps> = () => {
           </div>
 
           <div className="mt-8">
-            <div className="h-64 w-full bg-black/50 rounded-lg border border-gray-800 overflow-hidden">
-              <div ref={terminalRef} className="h-full" />
+            <div className="h-64 w-full bg-black/50 rounded-lg border border-gray-800 overflow-hidden p-4 font-mono text-green-400 text-sm">
+              <div>$ sudo ignite_transcendence</div>
+              <div>Loading AI core...</div>
+              <div>Initializing quantum entanglement...</div>
+              <div>System ready.</div>
+              <div className="animate-pulse">_</div>
             </div>
           </div>
 

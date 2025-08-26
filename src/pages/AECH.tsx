@@ -17,6 +17,7 @@ import {
 } from 'react-icons/fi';
 import HeroSection from '../components/AECH/HeroSection';
 import JoinSection from '../components/AECH/JoinSection';
+import { submitForm } from '../utils/formSubmission';
 
 // Define types for the popup component props
 interface SubscriptionPopupProps {
@@ -29,21 +30,41 @@ interface SubscriptionPopupProps {
 const SubscriptionPopup: React.FC<SubscriptionPopupProps> = ({ isOpen, onClose, title }) => {
   const [email, setEmail] = useState('');
   const [showThankYou, setShowThankYou] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the email to your backend
-    console.log(`Thank you for subscribing with ${email}! We'll notify you when AECH is ready.`);
+    setIsSubmitting(true);
     
-    // Show thank you message using React state
-    setShowThankYou(true);
-    
-    // Hide thank you message after 3 seconds
-    setTimeout(() => {
-      setShowThankYou(false);
-      setEmail('');
-      onClose();
-    }, 3000);
+    try {
+      // Submit to your backend database
+      await submitForm({
+        formType: 'aech_subscription',
+        name: 'AECH Subscriber',
+        email: email,
+        message: `${title} - User subscribed for AECH updates`,
+        subject: title,
+        additionalData: {
+          source: 'AECH Page',
+          subscriptionType: title
+        }
+      });
+      
+      // Show thank you message
+      setShowThankYou(true);
+      
+      // Hide thank you message after 3 seconds
+      setTimeout(() => {
+        setShowThankYou(false);
+        setEmail('');
+        onClose();
+      }, 3000);
+    } catch (error) {
+      console.error('Subscription failed:', error);
+      alert('Subscription failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -75,7 +96,7 @@ const SubscriptionPopup: React.FC<SubscriptionPopupProps> = ({ isOpen, onClose, 
               
               <div className="text-center mb-6">
                 <img src="/images/aechlogo.png" alt="AECH Logo" className="h-16 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold" style={{ color: '#00ffc8' }}>{title}</h3>
+                <h3 className="text-2xl font-bold glitch" data-text={title} style={{ color: '#00ffc8' }}>{title}</h3>
                 <p className="text-gray-300 mt-2">AECH is currently under construction. Subscribe to get notified when we launch.</p>
               </div>
               
@@ -93,9 +114,10 @@ const SubscriptionPopup: React.FC<SubscriptionPopupProps> = ({ isOpen, onClose, 
                 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-lg hover:from-cyan-400 hover:to-blue-500 transition-all"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-lg hover:from-cyan-400 hover:to-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Subscribe Now
+                  {isSubmitting ? 'Subscribing...' : 'Subscribe Now'}
                 </button>
               </form>
               
@@ -151,7 +173,7 @@ const AECH: React.FC = () => {
           {/* About AECH */}
           <section id="about-section" className="py-20 px-6">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#00ffae' }}>About AECH</h2>
+              <h2 className="text-4xl font-bold mb-12 text-center glitch" data-text="About AECH" style={{ color: '#00ffae' }}>About AECH</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div className="bg-black bg-opacity-50 p-6 rounded-xl border border-cyan-900/50 backdrop-blur-sm">
@@ -187,7 +209,7 @@ const AECH: React.FC = () => {
           {/* 3D Block Cube Visualizer */}
           <section className="py-20 px-6 bg-gradient-to-b from-transparent to-black/50">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#00ffae' }}>3D Blockchain Cube</h2>
+              <h2 className="text-4xl font-bold mb-12 text-center glitch" data-text="3D Blockchain Cube" style={{ color: '#00ffae' }}>3D Blockchain Cube</h2>
               
               <div className="max-w-3xl mx-auto relative rounded-xl overflow-hidden">
                 <div className="flex justify-center">
@@ -211,7 +233,7 @@ const AECH: React.FC = () => {
           {/* Wallet Features */}
           <section className="py-20 px-6 bg-black/50">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-bold mb-16 text-center" style={{ color: '#00ffae' }}>Wallet Features</h2>
+              <h2 className="text-4xl font-bold mb-16 text-center glitch" data-text="Wallet Features" style={{ color: '#00ffae' }}>Wallet Features</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div className="bg-black/50 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-300">
@@ -245,7 +267,7 @@ const AECH: React.FC = () => {
                 </div>
                 
                 <div className="bg-gradient-to-br from-cyan-500/10 to-emerald-500/10 p-6 rounded-xl border border-cyan-500/20 backdrop-blur-sm flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold mb-4 text-cyan-300">Ready to Experience AECH?</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-cyan-300 glitch" data-text="Ready to Experience AECH?">Ready to Experience AECH?</h3>
                   <p className="text-gray-300 mb-6">Join our waitlist to be among the first to access the future of finance.</p>
                   <button 
                     onClick={() => setShowEarlyAccessPopup(true)}

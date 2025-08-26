@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import LazyImage from '../components/LazyImage';
 
 
 interface ButtonProps {
@@ -19,38 +20,37 @@ const Button = ({ label, path, color, image, logo }: ButtonProps) => {
 
   return (
     <div
-      className="relative overflow-hidden rounded-lg cursor-pointer transform transition-all duration-300 hover:scale-105 hover:ring-4 hover:ring-white/20 dark:hover:ring-white/20"
+      className="relative overflow-hidden rounded-lg cursor-pointer transform transition-all duration-300 hover:scale-105 hover:ring-4 hover:ring-white/20 dark:hover:ring-white/20 w-full max-w-sm mx-auto"
       onClick={handleButtonClick}
       style={{
-        width: '300px',
-        height: '150px',
+        minHeight: '150px',
+        aspectRatio: '2/1',
         border: '2px solid rgba(255,255,255,0.1)',
         backdropFilter: 'blur(10px)',
         zIndex: 30
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br opacity-75" style={{
-        backgroundImage: `url('${image}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        filter: 'blur(2px) brightness(0.9)'
-      }} />
+      <div className="absolute inset-0 opacity-75" style={{ filter: 'blur(2px) brightness(0.9)' }}>
+        <LazyImage
+          src={image}
+          alt={`${label} background`}
+          className="w-full h-full"
+        />
+      </div>
       <div className={`absolute inset-0 ${color} opacity-75 mix-blend-multiply`} />
       <div className="relative px-4 py-4 text-white text-lg font-black uppercase tracking-wider text-center dark:text-white" style={{
         zIndex: 40
       }}>
-        <div className="text-2xl">{`${label}`.toUpperCase()}</div>
-        <div className="text-base opacity-75 dark:opacity-100">EXPLORE NOW</div>
+        <div className="text-xl sm:text-2xl">{`${label}`.toUpperCase()}</div>
+        <div className="text-sm sm:text-base opacity-75 dark:opacity-100">EXPLORE NOW</div>
         {logo && (
-          <img 
-            src={logo} 
-            alt={`${label} logo`} 
-            className="w-12 h-12 absolute bottom-4 left-4"
-            style={{
-              filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.5))',
-              zIndex: 50
-            }}
-          />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 absolute bottom-2 left-2 sm:bottom-4 sm:left-4" style={{ zIndex: 50 }}>
+            <LazyImage
+              src={logo}
+              alt={`${label} logo`}
+              className="w-full h-full"
+            />
+          </div>
         )}
       </div>
       <div className="absolute inset-0 bg-black/20 dark:bg-white/10" />
@@ -82,13 +82,6 @@ const buttons: ButtonProps[] = [
     path: '/aech',
     color: 'from-blue-600 to-cyan-700',
     image: '/images/aech.png'
-  },
-  {
-    label: 'Gesture',
-    path: '/gesture',
-    color: 'from-cyan-600 to-teal-700',
-    image: '/images/gesture.png',
-    logo: '/images/gesture-logo.png'
   },
   {
     label: 'Ghibli Store',
@@ -156,26 +149,29 @@ const buttons: ButtonProps[] = [
 export default function Home() {
   return (
     <div className="min-h-screen w-full overflow-y-auto relative">
-      <div className="text-center text-white py-4 relative z-10">
+      <div className="text-center text-white py-4 px-4 relative z-10">
         <motion.h1 
-          className="text-4xl font-black uppercase tracking-wider mb-2 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400"
+          className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-wider mb-2 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 glitch"
+          data-text="[SPIRITUALAI.ORG]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           style={{
             textShadow: '0 0 10px rgba(0, 217, 255, 0.5), 0 0 20px rgba(0, 217, 255, 0.3)',
             fontFamily: 'Orbitron, sans-serif',
-            letterSpacing: '0.2em',
+            letterSpacing: '0.1em',
             backgroundSize: '200% auto',
-            animation: 'gradient 8s linear infinite'
-          }}
+            animation: 'gradient 8s linear infinite',
+            '--acc1': '#00ffff',
+            '--acc2': '#ff00ff'
+          } as React.CSSProperties}
         >
           <span className="inline-block animate-pulse">[</span>
-          SPIRITUALAI.ORG
+          <span className="break-words">SPIRITUALAI.ORG</span>
           <span className="inline-block animate-pulse">]</span>
         </motion.h1>
         <motion.p 
-          className="text-lg text-gray-400 mt-2 font-light tracking-wider"
+          className="text-sm sm:text-base md:text-lg text-gray-400 mt-2 font-light tracking-wider px-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -187,7 +183,7 @@ export default function Home() {
         </motion.p>
       </div>
       <div className="relative z-10 p-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center">
           {buttons
             .filter(button => ![
               'Who is She', 
@@ -204,7 +200,7 @@ export default function Home() {
             .map((button, index) => (
               <motion.div 
                 key={index} 
-                className="w-full max-w-xs transform transition-transform hover:scale-105"
+                className="w-full max-w-xs transform transition-transform hover:scale-105 touch-manipulation"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}

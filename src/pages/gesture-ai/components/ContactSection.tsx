@@ -1,6 +1,59 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiMapPin, FiPhone, FiSend, FiCheck, FiGithub, FiTwitter, FiLinkedin } from 'react-icons/fi';
+import { submitForm } from '../../../utils/formSubmission';
+
+const NewsletterForm = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      await submitForm({
+        formType: 'gesture_ai_newsletter',
+        name: 'Newsletter Subscriber',
+        email: email,
+        message: 'Newsletter subscription from Gesture AI page',
+        subject: 'Gesture AI Newsletter Subscription',
+        additionalData: {
+          source: 'Gesture AI Page',
+          formLocation: 'Newsletter Signup'
+        }
+      });
+      
+      setEmail('');
+      alert('Successfully subscribed to newsletter!');
+    } catch (error) {
+      console.error('Newsletter subscription failed:', error);
+      alert('Failed to subscribe. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleNewsletterSubmit} className="flex">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Your email address"
+        required
+        className="flex-1 bg-white/5 border border-white/10 rounded-l-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+      />
+      <button 
+        type="submit"
+        disabled={isSubmitting}
+        className="px-6 bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-medium rounded-r-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+      >
+        {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+      </button>
+    </form>
+  );
+};
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -16,9 +69,19 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log('Form submitted:', formData);
+      // Submit to your backend database
+      await submitForm({
+        formType: 'gesture_ai_contact',
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        subject: 'Gesture AI Contact Form',
+        additionalData: {
+          source: 'Gesture AI Page',
+          formLocation: 'Contact Section'
+        }
+      });
+      
       setIsSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
       
@@ -28,6 +91,7 @@ const ContactSection = () => {
       }, 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
+      alert('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -44,20 +108,20 @@ const ContactSection = () => {
     {
       icon: <FiMail className="w-6 h-6" />,
       title: 'Email Us',
-      description: 'hello@gestureai.tech',
-      link: 'mailto:hello@gestureai.tech'
+      description: 'ailinuxfoundation@gmail.com',
+      link: 'mailto:ailinuxfoundation@gmail.com'
     },
     {
       icon: <FiMapPin className="w-6 h-6" />,
       title: 'Location',
-      description: 'San Francisco, CA',
-      link: 'https://maps.google.com?q=San+Francisco+CA'
+      description: 'India',
+      link: 'https://maps.google.com?q=India'
     },
     {
       icon: <FiPhone className="w-6 h-6" />,
       title: 'Call Us',
-      description: '+1 (555) 123-4567',
-      link: 'tel:+15551234567'
+      description: '+91 7457852306',
+      link: 'tel:+917457852306'
     }
   ];
 
@@ -95,7 +159,8 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-100"
+            className="text-4xl sm:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-100 glitch"
+            data-text="Let's Build Something Amazing"
           >
             Let's Build Something Amazing
           </motion.h2>
@@ -164,16 +229,7 @@ const ContactSection = () => {
               <div className="mt-12 p-6 rounded-xl bg-gradient-to-br from-cyan-500/5 to-emerald-500/5 border border-cyan-500/10">
                 <h4 className="text-lg font-semibold text-white mb-3">Join Our Newsletter</h4>
                 <p className="text-sm text-gray-400 mb-4">Stay updated with the latest features and news.</p>
-                <div className="flex">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="flex-1 bg-white/5 border border-white/10 rounded-l-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
-                  />
-                  <button className="px-6 bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-medium rounded-r-lg hover:opacity-90 transition-opacity">
-                    Subscribe
-                  </button>
-                </div>
+                <NewsletterForm />
               </div>
             </div>
           </motion.div>
