@@ -22,9 +22,6 @@ import HomeButton from './components/HomeButton';
 import { ParticlesProvider, useParticles } from './context/ParticlesContext';
 import TantraMeditations from './pages/TantraMeditations';
 import AIAgency from './pages/AIAgency';
-import DatabaseDemo from './components/DatabaseDemo';
-import FormDashboard from './components/FormDashboard';
-import Contact from './pages/Contact';
 
 function AppContent() {
   const { opacity } = useParticles();
@@ -37,9 +34,9 @@ function AppContent() {
           <ParticleBackground opacity={opacity} />
         </div>
         
-        {/* Home Button - Mobile responsive */}
-        <div className="fixed top-2 left-2 sm:top-4 sm:left-4 z-50">
-          <HomeButton className="backdrop-blur-sm bg-black/20 p-2 sm:p-3 rounded-lg" />
+        {/* Home Button */}
+        <div className="fixed top-4 left-4 z-50">
+          <HomeButton className="backdrop-blur-sm bg-black/20 p-3 rounded-lg" />
         </div>
         
         <Routes>
@@ -74,15 +71,6 @@ function AppContent() {
           
           {/* Tantra Meditations */}
           <Route path="/tantra-meditations" element={<TantraMeditations />} />
-          
-          {/* Database Demo */}
-          <Route path="/database-demo" element={<DatabaseDemo />} />
-          
-          {/* Contact Page */}
-          <Route path="/contact" element={<Contact />} />
-          
-          {/* Form Dashboard */}
-          <Route path="/admin/forms" element={<FormDashboard />} />
           
           {/* 404 - Keep this last */}
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,10 +1,7 @@
 [build]
   command = "npm run build"
   publish = "build"
-  functions = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "18"
+  functions = "src/functions"
 
 [dev]
   command = "npm start"
@@ -33,11 +30,3 @@
   for = "/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-# API function headers
-[[headers]]
-  for = "/.netlify/functions/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Headers = "Content-Type, Authorization"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"

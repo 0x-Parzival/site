@@ -2,13 +2,6 @@ import { useEffect } from 'react';
 
 const Cursor: React.FC = () => {
   useEffect(() => {
-    // Only initialize cursor on devices with hover capability (non-touch)
-    const hasHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    
-    if (!hasHover) {
-      return; // Exit early for touch devices
-    }
-
     const cursorDot = document.createElement('div');
     const cursorOutline = document.createElement('div');
 
@@ -36,14 +29,19 @@ const Cursor: React.FC = () => {
         cursorOutline.style.left = `${posX}px`;
         cursorOutline.style.top = `${posY}px`;
       });
+      // Animate outline position
+      requestAnimationFrame(() => {
+        cursorOutline.style.left = `${posX}px`;
+        cursorOutline.style.top = `${posY}px`;
+      });
     };
 
     document.addEventListener('mousemove', moveCursor, { passive: true });
 
     return () => {
       document.removeEventListener('mousemove', moveCursor);
-      if (cursorDot.parentNode) cursorDot.remove();
-      if (cursorOutline.parentNode) cursorOutline.remove();
+      cursorDot.remove();
+      cursorOutline.remove();
     };
   }, []);
 

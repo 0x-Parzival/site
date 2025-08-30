@@ -1,42 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { submitForm } from '../../../utils/formSubmission';
 
 const DownloadSection: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleDownloadRequest = async (osType: string) => {
-    if (!email) {
-      alert('Please enter your email to receive download notifications');
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      await submitForm({
-        formType: 'kalki_os_download',
-        name: 'KalkiOS User',
-        email: email,
-        message: `Download request for ${osType}`,
-        subject: `KalkiOS Download Request - ${osType}`,
-        additionalData: {
-          source: 'KalkiOS Page',
-          downloadType: osType,
-          formLocation: 'Download Section'
-        }
-      });
-      
-      alert(`Download request submitted! We'll notify you when KalkiOS ${osType} is available.`);
-      setEmail('');
-    } catch (error) {
-      console.error('Download request failed:', error);
-      alert('Failed to submit download request. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const downloadOptions = [
     {
       id: 'windows',
@@ -91,29 +56,10 @@ const DownloadSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8"
+            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto"
           >
-            Enter your email to request early access to KalkiOS
+            Download KalkiOS and join the community
           </motion.p>
-          
-          <div className="max-w-md mx-auto">
-            <div className="flex">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email for early access"
-                className="flex-1 bg-gray-900/50 border border-gray-700 rounded-l-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
-              />
-              <button
-                onClick={() => email && handleDownloadRequest('Early Access')}
-                disabled={!email || isSubmitting}
-                className="px-6 bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-medium rounded-r-lg hover:opacity-90 transition-opacity disabled:opacity-50"
-              >
-                {isSubmitting ? 'Submitting...' : 'Join Waitlist'}
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="max-w-5xl mx-auto">
@@ -131,15 +77,11 @@ const DownloadSection: React.FC = () => {
                     <span>{os.extension}</span>
                   </div>
                 </div>
-                <button 
-                  onClick={() => handleDownloadRequest(os.name)}
-                  disabled={isSubmitting}
-                  className="w-full py-3 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-400 font-medium hover:from-cyan-500/20 hover:to-blue-500/20 transition-all border-t border-gray-800 flex items-center justify-center disabled:opacity-50"
-                >
+                <button className="w-full py-3 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-400 font-medium hover:from-cyan-500/20 hover:to-blue-500/20 transition-all border-t border-gray-800 flex items-center justify-center">
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
-                  {isSubmitting ? 'Requesting...' : 'Request Download'}
+                  Download
                 </button>
                 </div>
               </div>
