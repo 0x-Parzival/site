@@ -43,7 +43,7 @@ export default function WhoAmI() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black text-white p-6 overflow-y-auto font-mono relative cursor-none">
+    <div className="min-h-screen text-white p-6 overflow-y-auto font-mono relative">
       {/* OM Sound Element */}
       <audio id="om-sound" loop>
         <source src="/sounds/om.mp3" type="audio/mpeg" />
@@ -54,7 +54,7 @@ export default function WhoAmI() {
       <div className="cursor-dot fixed w-3 h-3 bg-emerald-400 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 z-50 mix-blend-difference"></div>
       <div className="cursor-outline fixed w-8 h-8 border-2 border-emerald-400 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 z-50 mix-blend-difference transition-all duration-100 ease-out"></div>
 
-      <div className="max-w-5xl mx-auto relative z-10 pt-16">
+      <div className="max-w-5xl mx-auto relative z-20 pt-16">
         {/* Hero Section */}
         <div className="text-center mb-20">
           {/* Rotating Card */}
@@ -116,6 +116,15 @@ export default function WhoAmI() {
             >
               <span className="text-cyan-400 group-hover:scale-110 transition-transform">🔗</span>
               GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/keshav-baliyan-749188245/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-gray-900/50 backdrop-blur-sm border border-blue-500/20 text-white px-6 py-3 rounded-full hover:bg-blue-500/10 hover:border-blue-400/40 transition-all duration-300 group"
+            >
+              <span className="text-blue-400 group-hover:scale-110 transition-transform">🔗</span>
+              LinkedIn
             </a>
           </motion.div>
         </div>

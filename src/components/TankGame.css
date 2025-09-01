@@ -1,0 +1,292 @@
+/* Hide default cursor */
+@keyframes rocketPulse {
+  0% { filter: drop-shadow(0 0 8px rgba(255, 51, 102, 0.7)); }
+  100% { filter: drop-shadow(0 0 20px rgba(255, 100, 200, 0.9)); }
+}
+
+body {
+  cursor: none;
+}
+
+/* Rocket cursor for home page */
+.home-page {
+  cursor: none !important;
+}
+
+.rocket-cursor {
+  position: fixed;
+  width: 64px;
+  height: 64px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff3366'%3E%3Cpath d='M12 2.5c0 0 4.5 2.04 4.5 10.5 0 2.49-1.04 5.57-1.6 7H9.1c-.56-1.43-1.6-4.51-1.6-7C7.5 4.54 12 2.5 12 2.5zm2 8.5c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm-6.31 9.52c-.48-1.23-1.52-4.17-1.67-6.87l-1.13.75c-.56.38-.89 1-.89 1.67v3.51l-2.12 1.03 2.12 1.04v1.26l3.69-1.39zm12.31-3.43v-3.51c0-.67-.33-1.29-.89-1.67l-1.13-.75c-.15 2.69-1.2 5.64-1.67 6.87l3.69 1.39v-1.26l2.12-1.03-2.12-1.04z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%) rotate(45deg);
+  filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.7));
+  transition: transform 0.1s ease-out;
+  animation: rocketPulse 2s infinite alternate;
+}
+
+.tank-game-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1000;
+  pointer-events: none;
+  pointer-events: none; /* Allows clicks to pass through to elements below */
+}
+
+#tank {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 60px;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border-radius: 10px;
+  pointer-events: auto;
+  box-shadow: 
+    0 0 15px rgba(0, 200, 255, 0.5),
+    inset 0 0 10px rgba(0, 0, 0, 0.8);
+  border: 2px solid #444;
+  z-index: 1001;
+}
+
+#tank:before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  right: 20px;
+  height: 15px;
+  background: linear-gradient(90deg, #333, #555, #333);
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #666;
+}
+
+#tank:after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  right: 10px;
+  height: 5px;
+  background: #111;
+  border-radius: 2px;
+}
+
+#cannon {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  width: 16px;
+  height: 70px;
+  background: linear-gradient(90deg, #3a3a3a, #555, #3a3a3a);
+  transform-origin: 50% 100%;
+  transform: rotate(0deg);
+  border-radius: 8px;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+  border: 1px solid #666;
+  z-index: 1000;
+}
+
+/* Text effect for spiritualai.org */
+.text-effect {
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.text-effect span {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Bullet styles */
+.bullet {
+  position: absolute;
+  width: 16px;
+  height: 6px;
+  background: linear-gradient(90deg, #ff0066, #ff9900);
+  border-radius: 3px;
+  transform-origin: left center;
+  box-shadow: 0 0 15px #ff0066, 0 0 30px #ff6600;
+  pointer-events: none;
+  z-index: 998;
+  animation: bulletGlow 0.3s infinite alternate;
+  filter: drop-shadow(0 0 5px rgba(255, 102, 0, 0.8));
+}
+
+@keyframes bulletGlow {
+  from {
+    box-shadow: 0 0 10px #ff0066, 0 0 20px #ff6600;
+    filter: drop-shadow(0 0 5px rgba(255, 102, 0, 0.8));
+  }
+  to {
+    box-shadow: 0 0 15px #ff0066, 0 0 30px #ff6600, 0 0 45px #ffcc00;
+    filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.8));
+  }
+}
+
+/* Bullet trail effect */
+.bullet:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,51,102,0) 0%, rgba(255,153,102,0.5) 100%);
+  transform-origin: right center;
+  animation: bulletTrail 0.3s ease-out forwards;
+}
+
+@keyframes bulletTrail {
+  from {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+/* Bullet hit effect */
+.bullet-hit {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #ff6600 0%, #ff3300 50%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  z-index: 999;
+  animation: bulletHit 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  box-shadow: 0 0 30px #ff6600, 0 0 60px #ff3300;
+}
+
+@keyframes bulletHit {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* High-tech details */
+#cannon:before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: #0af;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #0af;
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+.missile {
+  position: absolute;
+  width: 6px;
+  height: 20px;
+  background: linear-gradient(180deg, #ff0, #f80, #f00);
+  border-radius: 10px;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(90deg);
+  box-shadow: 0 0 15px #f80;
+  z-index: 999;
+  animation: missileGlow 0.2s infinite alternate;
+}
+
+@keyframes missileGlow {
+  from { box-shadow: 0 0 10px #f80; }
+  to { box-shadow: 0 0 20px #ff0, 0 0 30px #f80; }
+}
+
+.explosion {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    #fff 0%,
+    #ff0 20%,
+    #f80 40%,
+    #f00 60%,
+    #900 100%
+  );
+  opacity: 0.9;
+  animation: blast 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.1);
+  box-shadow: 0 0 30px #f80, 0 0 60px #f80;
+  filter: blur(1px);
+  z-index: 999;
+}
+
+@keyframes blast {
+  0% { 
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 1;
+    filter: blur(1px);
+  }
+  70% {
+    opacity: 0.8;
+    filter: blur(2px);
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(3); 
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+/* Shockwave effect */
+.explosion:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 200, 0, 0.5) 0%,
+    rgba(255, 100, 0, 0.3) 50%,
+    rgba(200, 0, 0, 0) 100%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: shockwave 1s ease-out forwards;
+  z-index: -1;
+}
+
+@keyframes shockwave {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+}
