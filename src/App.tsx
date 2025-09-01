@@ -24,8 +24,8 @@ import TantraMeditations from './pages/TantraMeditations';
 import AIAgency from './pages/AIAgency';
 import SkillQuest from './pages/SkillQuest';
 import Documentaries from './pages/documentaries';
-const TIOFPage = lazy(() => import('./pages/documentary/tiof'));
 import TankGame from './components/TankGame';
+const TIOFPage = lazy(() => import('./pages/documentary/tiof'));
 
 function AppContent() {
   return (
